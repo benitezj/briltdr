@@ -1,0 +1,114 @@
+% Customizable fields and text areas start with % >> below.
+% Lines starting with the comment character (%) are normally removed before release outside the collaboration, but not those comments ending lines
+
+%%%%%%%%%%%%% local definitions %%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%  Title page %%%%%%%%%%%%%%%%%%%%%%%%
+%\cmsNoteHeader{XXX-08-000}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is over-written in the CMS environment: useful as preprint no. for export versions
+% >> Title: please make sure that the non-TeX equivalent is in PDFTitle below for papers. For PASs, PDFTitle can be used with plain TeX.
+\title{The Phase-2 Upgrade of the CMS Beam Radiation, Instrumentation, and Luminosity Detectors: Technical Design Report}
+
+% >> Authors
+%Author is always "The CMS Collaboration" for PAS and papers, so author, etc, below will be ignored in those cases
+%For multiple affiliations, create an address entry for the combination
+%To mark authors as primary, use the \author* form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\address[cern]{CERN}
+%\author*[cern]{A. Cern Person}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% >> Date
+% The date is in yyyy/mm/dd format. Today has been
+% redefined to match, but if the date needs to be fixed, please write it in this fashion.
+\date{\today}
+
+% >> Abstract
+% Abstract processing:
+% 1. **DO NOT use \include or \input** to include the abstract: our abstract extractor will not search through other files than this one.
+% 2. **DO NOT use %**                  to comment out sections of the abstract: the extractor will still grab those lines (and they won't be comments any longer!).
+% 3. For PASs: **DO NOT use CMS tex macros.**...in the abstract: CDS MathJax processor used on the abstract doesn't understand them _and_ will only look within $$. The abstracts for papers are hand formatted so macros are okay.
+\abstract{
+   Your abstract here.
+}
+
+% >> PDF Metadata
+% Do not comment out the following hypersetup lines (metadata). They will disappear in NODRAFT mode and are needed by CDS.
+% Also: make sure that the values of the metadata items are sensible and are in plain text with the possible exception of the PDFtitle for a PAS. Then you can use pure TeX symbols as if on a typewriter. Examples: $\sqrt{s}=13\TeV$ => $sqrt{s}=$ 13 TeV; 32\fbinv => 32 fb$^{-1}$
+% No unescaped comment % characters.
+% No curly braces {} except for TeX in the PDFtitle.
+\hypersetup{%
+pdfauthor={G. Auzinger},%
+pdftitle={The Phase-2 Upgrade of the CMS Beam Radiation, Instrumentation, and Luminosity Detectors: Technical Design Report},%
+pdfsubject={CMS},%
+pdfkeywords={CMS, bril, Phase-2 upgrade}}
+
+\input{tex/BRIL_commands}
+\input{tex/title_page}
+%\input{tex/editors}
+%\maketitle %maketitle comes after all the front information has been supplied
+% >> Text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Begin text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\tableofcontents
+%\cleardoublepage
+
+%% **DO NOT REMOVE THE BIBLIOGRAPHY** which is located before the appendix.
+%% You can take the text between here and the bibiliography as an example which you should replace with the actual text of your document.
+%% If you include other TeX files, be sure to use "\input{filename}" rather than "\input filename".
+%% The latter works for you, but our parser looks for the braces and will break when uploading the document.
+%%%%%%%%%%%%%%%
+
+% >> acknowledgments (for journal papers only)
+% The latest version of the acknowledgments will be included from https://twiki.cern.ch/twiki/bin/viewauth/CMS/Internal/PubAcknow as of the date of submission. Modify to match either US or UK English spelling for centre/center, programme/program. For PRL use the short version, for JINST normally use the long version. All others take the middle length version other than exceptional cases.
+%\begin{acknowledgments}
+%We would like to thank all colleagues who contributed material (text, figures, and results) to this document. 
+%\nts{we need something better here!}
+%\end{acknowledgments}
+%Part I
+%\part{Project Overview \& Introduction}
+%\input{tex/Part1/HL_LHC_Phase2}
+%\input{tex/Part1/Physics_Requirements}
+%\input{tex/Part1/Radiation_Simulation_Deliverable}
+%\input{tex/Part1/Beam_Rad_Monitoring}
+%\input{tex/Part1/Lumi_Strategy}
+%\input{tex/Part1/BRIL_DAQ}
+%Part II
+%\part{Technical System Descriptions}
+%\input{tex/Part2/Safety_Abort}
+%\input{tex/Part2/Beam_Timing}
+%\input{tex/Part2/BRIL_Radiation_Monitor_1}
+%\input{tex/Part2/BRIL_Radiation_Monitor_2}
+%\input{tex/Part2/BRIL_Radiation_Monitor_3}
+%%\input{tex/Part2/Additional_Neutron_Monitors}
+%\input{tex/Part2/HF}
+%\input{tex/Part2/TEPX}
+%\input{tex/Part2/D4R1}
+%\input{tex/Part2/SAL}
+%\input{tex/Part2/SAL2}
+%\input{tex/Part2/Outer_Tracker_Lumi}
+%\input{tex/Part2/BRIL_Trigger}
+\input{tex/Part2/DT}
+%\input{tex/Part2/Scouting}
+%\input{tex/Part2/BHM}
+%\input{tex/Part2/RAMSES}
+%\input{tex/Part2/DAQ}
+
+%Part III
+%\part{Project Organisation, Responsibilities, Planning \& Cost}
+%\input{tex/Part3/Project_Organisation}
+%\input{tex/Part3/Institutional_Interest}
+%\input{tex/Part3/Project_Schedule}
+%\input{tex/Part3/Cost_Estimate}
+%\input{tex/Part3/Risk_Analysis}
+
+%% **DO NOT REMOVE BIBLIOGRAPHY**
+\bibliography{briltdr2021}   % will be created by the tdr script.
+%% examples of appendices.
+%\clearpage
+%\appendix
+%\section{Appendix name}
+%%% DO NOT ADD \end{document}!
+

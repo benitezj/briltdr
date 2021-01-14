@@ -1,0 +1,1 @@
+$ENV{'TEXINPUTS'}='./tex/:./fig:./utils/general:'.$ENV{'TEXINPUTS'};

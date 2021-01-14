@@ -1,0 +1,46 @@
+% This is the shell that converts the main tex file into an actually
+% compilable tex file. Normally the tdr script takes care of this but
+% Overleaf can't deal with that, so instead we can commit this file and
+% it should work properly.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Style for CMS Computing / Physics Technical Design Reports
+%
+%   Lucas Taylor  4 Feb 2005,   Revised  12 Oct 2005
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  the following line is edited by the tdr script to change or to pass
+%  additional options:
+\documentclass[11pt,twoside,a4paper,tdr,final]{cms-tdr}
+\def\svnVersion{b923167}\def\svnDate{2020/03/16}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Common definitions
+%
+%  N.B. use of \providecommand rather than \newcommand means
+%       that a definition is ignored if already specified
+%
+%                                              L. Taylor 18 Feb 2005
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Hyphenations (only need to add here if you get a nasty word break)
+%
+\hyphenation{had-ron-i-za-tion}
+\hyphenation{cal-or-i-me-ter}
+\hyphenation{de-vices}
+%
+% Hyphenations-end
+
+\input{briltdr2021.tex}
+
+\end{document}
