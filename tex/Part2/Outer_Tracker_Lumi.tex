@@ -1,44 +1,56 @@
 \chapter{Outer Tracker Luminometer}
 
-The CMS Phase II Outer Tracker system will provide a source of high rate physics objects: L1 track stubs,
-due to its designed architecture which sends these objects to the L1 track reconstruction system at full 40 MHz frequency~\cite{CERN-LHCC-2017-009}.
+The CMS Phase II Outer Tracker  (OT) system will provide a source of high rate physics objects: L1 track stubs.
+In its designed architecture these objects are sent to the L1 track reconstruction system at full 40 MHz frequency~\cite{CERN-LHCC-2017-009}.
 Studies of CMS Phase II simulations show excellent linearity in the counting of these objects up to pile-up of 200.
-Both of these properties make this an excellent candidate for a precision luminometer.
-In the following sections, the detector layout, a preliminary design of the data acquisition system, and expected perfomace are described.
+These properties make this an excellent candidate for a precision luminometer.
+In the following sections the detector layout, a preliminary design of the data acquisition system, and the expected perfomace are described.
 
 
-\section{Detector Layout }
-- Description of the Outer Tracker layout (Layer 6)\\
+\section{Detector Layout and track stub reconstruction}
 
-- track stub objects
+The design of the Phase II OT is described in Chapter 3 of The Phase-2 Upgrade of the CMS Tracker TDR ~\cite{CERN-LHCC-2017-009} and shown below in Figure~\ref{fig:OT_layout}.
+The layout consists of 6 barrel layers (3 TBPS + 3 TB2S) and 5 endcap (TEDD) disks.
+The design of the CMS Phase II L1 trigger system requires the reconstruction of track stubs in the front-end of the OT in order to aid the track reconstruction for the L1 trigger.
+For the luminosity measurement, CMS detector simulations have been studied up to the Phase II expected pile-up,
+these studies described below show that the best precision can be obtained with the track stub counting from the barrel layer 6. 
+The OT barrel layer 6 consists of 78 ladders on each side of the detector, with each ladder containing 12 sensor modules as shown in Figure~\ref{fig:OT_ladder_stub}.
+The track stub reconstruction (right side of Figure ~\ref{fig:OT_ladder_stub}) is performed with firmware algorithms in the front-end electronics and transmitted to the back-end for all LHC bunch crossings.
 
-\section{Track Stub Counting and Data Acquisition}
-- OT backend \\ 
-- track stub histogramming \\
-- data transfer 
+
+\section{Data Acquisition}
+
+A design of the OT DAQ including both the front-end and back-end systems is shown in Figure~\ref{fig:OT_DAQ}.
+The back-end consists of Data, Trigger, and Control (DTC) boards which process the Trigger (TRIG) stream containting the track stub information. 
+The list of track stubs reconstructed for each bunch crossing is transmitted in blocks of 8 bunch crossings to the DTC boards.
+For the luminosity measurement, a specialized {\it BRIL Histogramming} firmware module has been developed which will count the number of track stubs in each bunch crossing and produce a histogram per orbit (3654 bunch crossings) at regular integration intervals of 1 second.
+
+Each luminosity histogram will be configured to integrate track stubs from one 12 module ladder, the DTC boards process 3-6 ladders.
+The number of necessary instances of  {\it BRIL Histogramming} modules will be installed in the DTC boards and readout via IPBus network protocol to the BRIL-DAQ system for further processing and storage.
+Considering the rate of track stubs per ladder estimated with CMS simulations at pile-up of 200  (Figure~\ref{fig:OT_rates}),  the necessary memory per luminosity histogram is estimated using 32-bit memory words as follows: 3564 stub counting words (bins/orbit) + 9 words header + 2 words module mask + 192 error words (12 modules * 8 errors * 2 words/error) for a total of 3767 words per histogram.
+In the case of 6 ladders per DTC this corresponds to a data readout rate of ~496 kbps.
+For the total of 156 OT histograms, the total data rate received by the BRIL-DAQ is approximately 18.8 Mbps.
+
+
 
 \section{Expected Performance}
 - Rates\\
 - linearity \\
 - statistical precision
 
+
+
 \clearpage
 
 \begin{figure}[hbtp]
 \centering
 \begin{subfigure}
-  \centering
-  \includegraphics[width=.9\linewidth]{tex/Part2/fig/OT/OT-longitudinal.png}
-\end{subfigure}
-\begin{subfigure}
-  \centering
-  \includegraphics[width=.9\linewidth]{tex/Part2/fig/OT/OT-transverse.png}
+\centering
+\includegraphics[width=.9\linewidth]{tex/Part2/fig/OT/OT-longitudinal.png}
 \end{subfigure}
 \caption{
-  Layout of the CMS Phase II Outer Tracker.
-  Top figure shows a longitudinal view with two regions in the barrel (TB2S, TBPS) and the endcap region (TEDD).
-  Bottom figure shows a transverse view of the three TB2S layers (4, 5, and 6) and the layout of one ladder with 12 sensor modules.
-  Track stubs from the  TB2S layer 6, with 78 ladders, will be used for luminosity measurement.  
+  Longitudinal view of the CMS Phase II Outer Tracker layout  with two regions in the barrel (TB2S, TBPS) and the endcap region (TEDD).
+  For the luminosity measurement only the barrel outermost layer 6 in the TB2S part is used, this layer consists of 78 sensor ladders on each side of CMS.
 }
 \label{fig:OT_layout}
 \end{figure}
@@ -46,9 +58,26 @@ In the following sections, the detector layout, a preliminary design of the data
 
 \begin{figure}[hbtp]
 \centering
+\begin{subfigure}
+  \centering
+  \includegraphics[width=.48\linewidth]{tex/Part2/fig/OT/OT-ladder.png}
+\end{subfigure}
+\begin{subfigure}
+  \centering
+  \includegraphics[width=.48\linewidth]{tex/Part2/fig/OT/OT-stub.png}
+\end{subfigure}
+\caption{
+  Layout of one OT sensor ladder with 12 modules (left) and diagram of the track stub reconstruction (right) using the two sensor layers in each module.  
+}
+\label{fig:OT_ladder_stub}
+\end{figure}
+
+
+\begin{figure}[hbtp]
+\centering
 \includegraphics[width=.65\linewidth]{tex/Part2/fig/OT/OT-DAQoverview.png}
 \caption{
-  Design of the Phase II Outer Tracker frontend (FE) and backend (BE) electronics.   
+  Design of the Phase II Outer Tracker frontend (FE) and backend (BE) electronics~\cite{CERN-LHCC-2017-009}.  
 }   
 \label{fig:OT_DAQ}
 \end{figure}
@@ -58,7 +87,8 @@ In the following sections, the detector layout, a preliminary design of the data
 \centering
 \includegraphics[width=.6\linewidth]{tex/Part2/fig/OT/OT-Rates.pdf}
 \caption{
-  Average number of track stubs per event per ladder as a function of the ladder id. The rate is determined from the CMS Phase II simulation for a pile-up of 200.
+  Average number of track stubs per event per ladder as a function of the ladder id.
+  The rate is determined from the CMS Phase II simulation for a pile-up of 200.
 }
 \label{fig:OT_rates}
 \end{figure}
