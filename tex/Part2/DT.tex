@@ -1,55 +1,78 @@
 \chapter{Muon Drift Tube Luminometer}
+\label{sec:DT-lumi}
+%%
+%%For muon trigger stub counting, the use of trigger scouting methods prototyped at the end of Run 2
+%%will allow per-bunch emittance scan analysis as well as luminosity measurement in physics conditions.
+%%Muon trigger stub counting in Run 2 was orbit-integrated at per-LS frequency in real time;
+%%using trigger scouting online bunch-by-bunch measurement at 4LN frequency is targeted in Run 3.
+%%
+%%It is also foreseen to ... expand the muon DT and resistive plate chamber (RPC) functionality to provide bunch-by-bunch
+%%trigger primitives instead of a value integrated over a complete orbit.
+%% orbit-integrated DT muon stub counting in Run 2 was available in real time at LS frequency.
+%%
+%%In Run 2, techniques like the DT muon trigger stub counting and the RAMSES radiation monitoring have proven
+%%to be useful for stability and linearity studies, and they are planned to be exploited also in Phase-2.
+%%To alleviate some of the limitations and allow per-bunch measurements, there is a requirement for Phase-2
+%%for the upgrade of the muon counting for luminosity to have a 40MHz readout, as described in Section 7.4.2.
+%%
+%%In Run 2, counting of track candidates in the barrel muon systems has been shown to have good
+%%linearity and can be used for stability and linearity monitoring of other luminometers. The CMS
+%%DT chambers are installed in the return barrel yoke and provide muon tracking and triggering
+%%for CMS physics operation. The observable used in both Run 1 and Run 2 was the barrel sorter
+%%rate from the barrel muon track finder (BMTF), which counts muon track candidates with lumi
+%%section granularity, but integrated over all bunches in the orbit. The statistical uncertainty
+%%in the orbit-integrated rates at a luminosity of 2 x 1034 cm2 s1 is 0.2\%.
+%% Assuming a fill of 2544 equally populated colliding bunches, the statistical uncertainty per BX would be 12%.
+%% A naive extrapolation to a total luminosity of 51034 cm2 s1 for HL-LHC yields a statistical
+%% uncertainty per BX of 8%.
+%%
+%%Drift tube muon system: As mentioned, the current implementation of DT luminosity
+%%is extremely useful, but it does not provide the necessary statistical precision and
+%%time granularity to meet Phase-2 requirements. Thus the rates and statistical uncertainties
+%%achievable with different levels of muon trigger objects need to be studied
+%%in detail to identify the most suitable one for a 40MHz precision online measurement.
+%%The possibility of using the DT back-end electronics for dedicated luminosity
+%%processing during Run 3 should be investigated.
+%%
 
-- Overview \\
-- past experience \\
-- motivation
+During Run 2, counting of muon track candidates from the CMS Level 1 system, the Barrel Muon Track Finder (BMTF) ,
+has proven to be useful for the luminosity systematics estimation due its excellent linearity and stability \cite{LUM-17-001}.
+The observable used was the barrel track soter rate which counts the BMTF track candidates
+integrated over the entire orbit and over one lumi section ($\sim$23 s) period.
+The statistical precision of this counter for the Run 2 instantaneous luminosity was of order 0.2\%.
+This counter was recorded by the BRIL-DAQ in real time, however was of limited use for luminosity due to the
+lack of per bunch information and relatively long integration time.
+A per bunch luminosity measurement at the HL-LHC instantaneous luminosity of
+$5\text{-}7x10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ is expected to be of the order of $8\%$,
+which does not provide enough precision for an online luminometer and does not allow for an independent calibration
+during the vdM scans nor long term stability corrections from the emmittance scans.
+Below we describe an improved luminometer based on muon trigger primitives, which will be available per bunch crossing at 40 MHz
+from the Phase II backend of the muon barrel system for each of the Muon Drift Tube (DT) chambers, and provide higher count rates.
 
 
-%%temporary citation to the 2016 luminosity PAS
-\cite{LUM-17-001}
 
-\section{Detector Layout and Trigger Primitives}
-- Description of the DT system layout \\
-- trigger primitive objects
+\section{Detector Description and Trigger Primitives}
 
-\cite{CERN-LHCC-2017-012}
+The Muon DT chambers are installed in the barrel yoke of the CMS detector \cite{DT-2009}.
+A total of 250 chambers are distributed in 5 wheels (YB=0,$\pm$1,$\pm$2) and four radial layers (MB=1-4),
+a longitudinal view of the entire  CMS muon system is shown in Figure~\ref{fig:DT_layout}.
+The RPC chambers are also visible in this diagram as layers RB1-RB4 in front of the DT chambers.
 
-\section{Data Acquisition}
-- DT backend \\
-- trigger primitive histogramming \\
-- data transfer
-
-\section{Expected Performance}
-- Rates \\ 
-- linearity \\
-- statistical precision 
+Hits from both the DT and RPC chambers will be combined to reconstruct track segments (Trigger Primitives) per chamber for the muon reconstruction needed by the Level 1 trigger system in Phase II \cite{CERN-LHCC-2017-012}.
+The rates of these trigger primitives have been studied using Run 2 data, Figure~\ref{fig:DT_rates} shows the rates for the YB+2 wheel DT chambers.
 
 
-\clearpage
 
 \begin{figure}[hbtp]
 \centering
-\begin{subfigure}
-  \centering
-  \includegraphics[width=.9\linewidth]{tex/Part2/fig/DT/DT-longitudinal.png}
-\end{subfigure}
-%\begin{subfigure}
-%  \centering
-%  \includegraphics[width=.6\linewidth]{tex/Part2/fig/DT/DT-transverse.png}
-%\end{subfigure}
+\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-longitudinal.png}
+\includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-transverse.png}
 \caption{
-  Geometrical layout of the CMS Muon barrel detector system showing the Drift Tube (DT) chambers longitudinal view (top) and transverse view (bottom).
-  The numbering scheme for the chambers is shown in within the figure.
+  Longitudinal view of one quarter of the CMS muon detector system (top) showing the Drift Tube chambers in the barrel region
+  and transverse view (bottom) showing the 12 phi sectors and a muon track trayectory.
+  The numbering scheme for the chambers is shown in within the figure and consists of a wheel number, a radial station number (MB), and phi sector.
 }
 \label{fig:DT_layout}
-\end{figure}
-
-
-\begin{figure}[hbtp]
-\centering
-\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQoverview.png}
-\caption{Design  of the Muon DAQ system architecture for Phase II showing the different layers where the L1 trigger objects are generated. In  this layout the DT trigger primitives are generated in the Layer 1 of the backend.}   
-\label{fig:DT_DAQ}
 \end{figure}
 
 
@@ -61,9 +84,35 @@
 \end{figure}
 
 
+
+\section{Data Acquisition}
+- DT backend \\
+- trigger primitive histogramming \\
+- data transfer
+
+
+
+\section{Expected Performance}
+- Rates \\ 
+- linearity \\
+- statistical precision 
+
+
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQoverview.png}
+\caption{Design  of the Muon DAQ system architecture for Phase II showing the different layers where the L1 trigger objects are generated. In  this layout the DT trigger primitives are generated in the Layer 1 of the backend.}   
+\label{fig:DT_DAQ}
+\end{figure}
+
+
+
 \begin{figure}[hbtp]
 \centering
 \includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
 \caption{DT L1 trigger primitive rates for one chamber  as a function of instantenous luminosity measured by the HF luminometer in Run 2 data.} 
 \label{fig:DT_linearity}
 \end{figure}
+
+
