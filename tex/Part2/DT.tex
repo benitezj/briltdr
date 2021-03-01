@@ -40,15 +40,15 @@ has proven to be useful for the luminosity systematics estimation due its excell
 The observable used was the barrel track soter rate which counts the BMTF track candidates
 integrated over the entire orbit and over one lumi section ($\sim$23 s) period.
 The statistical precision of this counter for the Run 2 instantaneous luminosity was of order 0.2\%.
-This counter was recorded by the BRIL-DAQ in real time, however was of limited use for luminosity due to the
+This counter was recorded by the BRIL-DAQ in real time,
+however was of limited use for online luminosity measurement due to the
 lack of per bunch information and relatively long integration time.
 A per bunch luminosity measurement at the HL-LHC instantaneous luminosity of
-$5\text{-}7x10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ is expected to be of the order of $8\%$,
+$5\text{-}7\times10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ is expected to be of the order of $8\%$,
 which does not provide enough precision for an online luminometer and does not allow for an independent calibration
 during the vdM scans nor long term stability corrections from the emmittance scans.
-Below we describe an improved luminometer based on muon trigger primitives, which will be available per bunch crossing at 40 MHz
-from the Phase II backend of the muon barrel system for each of the Muon Drift Tube (DT) chambers, and provide higher count rates.
-
+Below we describe an improved luminometer design based on muon trigger primitives, which will be available per bunch crossing at 40 MHz
+from the Phase II backend of the muon barrel detector for each of the Muon Drift Tube (DT) chambers, and provides higher count rates.
 
 
 \section{Detector Description and Trigger Primitives}
@@ -58,9 +58,14 @@ A total of 250 chambers are distributed in 5 wheels (YB=0,$\pm$1,$\pm$2) and fou
 a longitudinal view of the entire  CMS muon system is shown in Figure~\ref{fig:DT_layout}.
 The RPC chambers are also visible in this diagram as layers RB1-RB4 in front of the DT chambers.
 
-Hits from both the DT and RPC chambers will be combined to reconstruct track segments (Trigger Primitives) per chamber for the muon reconstruction needed by the Level 1 trigger system in Phase II \cite{CERN-LHCC-2017-012}.
-The rates of these trigger primitives have been studied using Run 2 data, Figure~\ref{fig:DT_rates} shows the rates for the YB+2 wheel DT chambers.
-
+Hits from both the DT and RPC chambers will be combined to reconstruct muon track segments (Trigger Primitives) per DT chamber for the muon reconstruction in the Level 1 system in Phase II \cite{CERN-LHCC-2017-012}.
+The rates of these trigger primitives have been studied using Run 2 data.
+Figure~\ref{fig:DT_rates} shows the rates for the YB+2  DT chambers,
+the values have been extrapolated up to the expected HL-LHC instantaneous luminosity of  $7.5\times10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ from the measured values in Run 2 data.
+We observe that the chambers in the first radial layer MB1 detect the highest rate and the rate decreases to less than 10\% in the outermost layer,
+this behaviour is consistent with particles from the jet punch-through observed by the inner layers.
+In the MB4 layer we also observe a phi asymmetry with higher rates on the top of the detector (Sectors 3-5), believed to be due to machine induced backgrounds,
+for this reason we expect to exclude this layer from the final luminosity calculation as the rates are not expected to scale linearly with the number of IP collisions. 
 
 
 \begin{figure}[hbtp]
@@ -90,6 +95,34 @@ The rates of these trigger primitives have been studied using Run 2 data, Figure
 - trigger primitive histogramming \\
 - data transfer
 
+The muon detector system readout electronics will undergo a complete upgrade for Phase-2 in order to cope with the higher data rates and L1 trigger demands.
+Figure~\ref{fig:DT_DAQ2} shows a comparison of the current components of the DT backend and the new design for Phase-2 \cite{CERN-LHCC-2017-012}.
+In the Phase-2 design, the frontend electronics are upgraded with On-Board Electronics for DT (OBDT) in new Minicrate 2 boards based on FPGA's.
+The data including the full collection of chamber hits will be continously streamed via high speed 8 GBT optical links to the backend Layer 1 processor boards (L1 processors) where the trigger primitives are reconstructed.
+
+For the online luminosity measurement, the generic BRIL Histogramming firmware described before will be installed as part of the Layer 1 processor boards in the backend.
+This histogramming module will access and count the list of trigger primitives in parallel to the CMS L1 trigger stream, and produce a histogram with per bunch counts (3564 bins) integrated over a 1 second period.
+The 
+
+
+
+%\begin{figure}[hbtp]
+%\centering
+%\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQoverview.png}
+%\caption{Design  of the Muon DAQ system architecture for Phase II showing the different layers where the L1 trigger objects are generated. In  this layout the DT trigger primitives are generated in the Layer 1 of the backend.}   
+%\label{fig:DT_DAQ}
+%\end{figure}
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQ-Phase1_vs_Phase2.png}
+\caption{Current partition of the DT system readout electronics (left) and Phase-2 upgrade design (right) using On-Board Electronics for DT (OBDT).
+  The muon trigger primitives are produced by the L1 processors.
+}   
+\label{fig:DT_DAQ2}
+\end{figure}
+
+
 
 
 \section{Expected Performance}
@@ -98,13 +131,6 @@ The rates of these trigger primitives have been studied using Run 2 data, Figure
 - statistical precision 
 
 
-
-\begin{figure}[hbtp]
-\centering
-\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQoverview.png}
-\caption{Design  of the Muon DAQ system architecture for Phase II showing the different layers where the L1 trigger objects are generated. In  this layout the DT trigger primitives are generated in the Layer 1 of the backend.}   
-\label{fig:DT_DAQ}
-\end{figure}
 
 
 
