@@ -35,36 +35,36 @@
 %%processing during Run 3 should be investigated.
 %%
 
-During Run 2, counting of muon track candidates from the CMS Level 1 system, the Barrel Muon Track Finder (BMTF) ,
+During Run 2, counting of muon track candidates from the CMS Level 1 trigger system, the Barrel Muon Track Finder (BMTF),
 has proven to be useful for the luminosity systematics estimation due its excellent linearity and stability \cite{LUM-17-001}.
-The observable used was the barrel track soter rate which counts the BMTF track candidates
-integrated over the entire orbit and over one lumi section ($\sim$23 s) period.
+The observable used was the barrel track soter rate integrating BMTF track candidates
+ over the entire orbit and over one lumi section ($\sim$23 s) period.
 The statistical precision of this counter for the Run 2 instantaneous luminosity was of order 0.2\%.
 This counter was recorded by the BRIL-DAQ in real time,
 however was of limited use for online luminosity measurement due to the
 lack of per bunch information and relatively long integration time.
-A per bunch luminosity measurement at the HL-LHC instantaneous luminosity of
-$5\text{-}7\times10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ is expected to be of the order of $8\%$,
+The per bunch luminosity uncertainty with the BMTF tracks at the HL-LHC instantaneous luminosity of is expected to be of the order of 8\%,
 which does not provide enough precision for an online luminometer and does not allow for an independent calibration
-during the vdM scans nor long term stability corrections from the emmittance scans.
-Below we describe an improved luminometer design based on muon trigger primitives, which will be available per bunch crossing at 40 MHz
-from the Phase II backend of the muon barrel detector for each of the Muon Drift Tube (DT) chambers, and provides higher count rates.
+with the vdM scans nor long term stability corrections from the emmittance scans.
+Below we describe an improved luminometer design based on muon trigger primitives which will be available 
+from the Phase II backend of the  barrel detector for each of the Muon Drift Tube (DT) chambers,
+and provides higher count rates per bunch crossing.
 
 
 \section{Detector Description and Trigger Primitives}
 
 The Muon DT chambers are installed in the barrel yoke of the CMS detector \cite{DT-2009}.
 A total of 250 chambers are distributed in 5 wheels (YB=0,$\pm$1,$\pm$2) and four radial layers (MB=1-4),
-a longitudinal view of the entire  CMS muon system is shown in Figure~\ref{fig:DT_layout}.
+a layout of the entire  CMS muon system is shown in Figure~\ref{fig:DT_layout}.
 The RPC chambers are also visible in this diagram as layers RB1-RB4 in front of the DT chambers.
 
-Hits from both the DT and RPC chambers will be combined to reconstruct muon track segments (Trigger Primitives) per DT chamber for the muon reconstruction in the Level 1 system in Phase II \cite{CERN-LHCC-2017-012}.
+Hits from the DT, RPC, and HO detectors will be combined to reconstruct muon track segments (trigger primitives) per DT chamber as part of the  Level 1 muon reconstruction system in Phase-2 \cite{CERN-LHCC-2017-012}.
 The rates of these trigger primitives have been studied using Run 2 data.
-Figure~\ref{fig:DT_rates} shows the rates for the YB+2  DT chambers,
+Figure~\ref{fig:DT_rates} shows the rates for the YB+2  chambers,
 the values have been extrapolated up to the expected HL-LHC instantaneous luminosity of  $7.5\times10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ from the measured values in Run 2 data.
 We observe that the chambers in the first radial layer MB1 detect the highest rate and the rate decreases to less than 10\% in the outermost layer,
-this behaviour is consistent with particles from the jet punch-through observed by the inner layers.
-In the MB4 layer we also observe a phi asymmetry with higher rates on the top of the detector (Sectors 3-5), believed to be due to machine induced backgrounds,
+this behaviour is consistent with particles from jet punch-through observed by the inner layers.
+In the MB4 layer we also observe a phi asymmetry with higher rates on the top of the CMS detector (Sectors 3-5), believed to be due to machine induced backgrounds,
 for this reason we expect to exclude this layer from the final luminosity calculation as the rates are not expected to scale linearly with the number of IP collisions. 
 
 
@@ -75,7 +75,7 @@ for this reason we expect to exclude this layer from the final luminosity calcul
 \caption{
   Longitudinal view of one quarter of the CMS muon detector system (top) showing the Drift Tube chambers in the barrel region
   and transverse view (bottom) showing the 12 phi sectors and a muon track trayectory.
-  The numbering scheme for the chambers is shown in within the figure and consists of a wheel number, a radial station number (MB), and phi sector.
+  The numbering scheme for the chambers is shown within the figure and consists of a wheel number, a radial station number (MB), and phi sector.
 }
 \label{fig:DT_layout}
 \end{figure}
@@ -83,7 +83,7 @@ for this reason we expect to exclude this layer from the final luminosity calcul
 
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-RatesExtrapolated.png}
+\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-RatesExtrapolated.png}
 \caption{DT L1 trigger primitive rates for the chambers in the wheel YB+2.} 
 \label{fig:DT_rates}
 \end{figure}
@@ -91,20 +91,54 @@ for this reason we expect to exclude this layer from the final luminosity calcul
 
 
 \section{Data Acquisition}
-- DT backend \\
-- trigger primitive histogramming \\
-- data transfer
 
-The muon detector system readout electronics will undergo a complete upgrade for Phase-2 in order to cope with the higher data rates and L1 trigger demands.
-Figure~\ref{fig:DT_DAQ2} shows a comparison of the current components of the DT backend and the new design for Phase-2 \cite{CERN-LHCC-2017-012}.
+The muon system readout electronics will undergo a complete upgrade for Phase-2 in order to cope with the higher data rates and L1 trigger demands.
+Figure~\ref{fig:DT_DAQ2} shows a comparison of the current components of the DT backend and the new architecture for Phase-2 \cite{CERN-LHCC-2017-012}.
 In the Phase-2 design, the frontend electronics are upgraded with On-Board Electronics for DT (OBDT) in new Minicrate 2 boards based on FPGA's.
-The data including the full collection of chamber hits will be continously streamed via high speed 8 GBT optical links to the backend Layer 1 processor boards (L1 processors) where the trigger primitives are reconstructed.
+The data, including the full collection of DT, RPC, and HO hits, will be continously streamed via high speed optical
+links to the backend Layer 1 processor boards (L1 processors) where the trigger primitives are reconstructed.
+The L1 processors will consist of ATCA boards capable of processing full DT phi sectors, approximately 60 processor boards in total,
+and will allow for significant improvements in the trigger primitive reconstruction including improved bunch crossing identification
+through improved timing resolution as well as improved spatial resolution. 
 
-For the online luminosity measurement, the generic BRIL Histogramming firmware described before will be installed as part of the Layer 1 processor boards in the backend.
-This histogramming module will access and count the list of trigger primitives in parallel to the CMS L1 trigger stream, and produce a histogram with per bunch counts (3564 bins) integrated over a 1 second period.
-The 
+
+For the online luminosity measurement, the generic BRIL Histogramming firmware described in Chapter~\ref{sec:TEPX} will be installed as part of the backend Layer 1 processor firmware.
+This histogramming module will access and count the list of trigger primitives in parallel to the CMS L1 trigger stream
+and produce a histogram with counts per bunch crossing (3564 bins) at 1 second integration intervals.
+Based on the expected number of trigger primitive counts per bunch crossing, the required memory per histogram is estimated at 28 Kb, requiring a minimal amount of the L1 processor resources. 
+The histograms  will be transferred to the BRIL-DAQ system as part of the IPBus network traffic used for the slow control the DT backend.
+The total data rate expected for the DT luminometer (250 histograms) at the BRIL-DAQ end is aproximately 7.1 Mbps.
+As for the other luminometers, the individual histograms will be merged inside the BRIL-DAQ accounting for possible background subtraction and filtering of any misbehaving chambers.
+Due to dependence on the CMS L1 trigger system, this luminometer will operate only during stable beams.
+
+A demonstrator of the DT Phase-2 electronics has been installed in one sector (YB+2, S12) to take data during Run 3.
+A total of 12 OBDT's were installed in the four MB layers, with the MB 3 and 4 equiped with a dual readout using both OBDT's and Legacy electronics.
+A backend prototype (AB7) based on legacy TwinMux boards is currently used for event matching and trigger primitive generation.
+Since 2020, a test version of the BRIL Histogramming firmware has been installed in the AB7 backend and is expected to record data during Run 3.
 
 
+
+\section{Expected Performance}
+
+Despite the increased particle rates at the HL-LHC conditions, the expected hit occupancy for the DT chambers will remain low at about 50 Hz cm$^{-2}$
+and below 500 kHz per station at the inner MB layers.
+At these rates the counting of trigger primitives should remain linear up to high pileup, a necesary property for precision luminosity measurement.
+Figure~\ref{fig:DT_linearity} shows the dependence of the number of DT trigger primitives on the instantenous luminosity
+observed using Run 2 data up to about $2\times10^{32}$ cm$^{-2}$ s$^{-1}$.
+A very linear behaviour is observed, the deviations from linearity obtained from this data are less than XX\%.
+
+Another important aspect is the statistical precision during normal Physics running as well as during the vdM scans used to obtain the calibration constant.
+To estimate the statistical precision we use the trigger primitive rates previously extrapolated to the HL-LHC luminosity conditions.
+Excluding the MB4 layer, the total orbit integrated rate expected is $\sim$17 MHz at $7.5\times10^{34}$ cm$^{-2}$ s$^{-1}$;
+this corresponds to about 0.61 trigger primitives per bunch crossing for Physics (pu=200) and 0.00153 per bunch crossing for vdM (pu=0.5) conditions.    
+For the online luminosity measurement using one colliding bunch and 1 s integration period for Physics (30 s for vdM),
+the statistical precision expected is 1.2\% (4.4\%).
+During Physics conditions the expected statistical precision meets the requirement of 2\%,
+while for vdM a precision of 0.36\%  meeting the requirements for the calibration constant (1\%) will be obtained only after combining all colliding bunches, 150 assummed here.
+The final precision of this luminometer will of course depend on the ability to handle any backgrounds and keep a stable operation of the muon detector and DAQ over entire run periods.
+
+
+\clearpage
 
 %\begin{figure}[hbtp]
 %\centering
@@ -115,7 +149,7 @@ The
 
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=.65\linewidth]{tex/Part2/fig/DT/DT-DAQ-Phase1_vs_Phase2.png}
+\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-DAQ-Phase1_vs_Phase2.png}
 \caption{Current partition of the DT system readout electronics (left) and Phase-2 upgrade design (right) using On-Board Electronics for DT (OBDT).
   The muon trigger primitives are produced by the L1 processors.
 }   
@@ -123,21 +157,10 @@ The
 \end{figure}
 
 
-
-
-\section{Expected Performance}
-- Rates \\ 
-- linearity \\
-- statistical precision 
-
-
-
-
-
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
-\caption{DT L1 trigger primitive rates for one chamber  as a function of instantenous luminosity measured by the HF luminometer in Run 2 data.} 
+\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
+\caption{DT L1 trigger primitive rates for one chamber  as a function of instantenous luminosity measured by the HF luminometer in one Physics run during 2018.} 
 \label{fig:DT_linearity}
 \end{figure}
 

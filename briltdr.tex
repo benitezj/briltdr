@@ -30,9 +30,7 @@
 % 1. **DO NOT use \include or \input** to include the abstract: our abstract extractor will not search through other files than this one.
 % 2. **DO NOT use %**                  to comment out sections of the abstract: the extractor will still grab those lines (and they won't be comments any longer!).
 % 3. For PASs: **DO NOT use CMS tex macros.**...in the abstract: CDS MathJax processor used on the abstract doesn't understand them _and_ will only look within $$. The abstracts for papers are hand formatted so macros are okay.
-\abstract{
-   Your abstract here.
-}
+%\abstract{}
 
 % >> PDF Metadata
 % Do not comment out the following hypersetup lines (metadata). They will disappear in NODRAFT mode and are needed by CDS.
@@ -47,7 +45,7 @@ pdfkeywords={CMS, bril, Phase-2 upgrade}}
 
 \input{tex/BRIL_commands}
 \input{tex/title_page}
-\input{tex/editors}
+%\input{tex/editors}
 %\maketitle %maketitle comes after all the front information has been supplied
 % >> Text
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Begin text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
