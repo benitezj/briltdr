@@ -43,7 +43,7 @@ The statistical precision of this counter for the Run 2 instantaneous luminosity
 This counter was recorded by the BRIL-DAQ in real time,
 however was of limited use for online luminosity measurement due to the
 lack of per bunch information and relatively long integration time.
-The per bunch luminosity uncertainty with the BMTF tracks at the HL-LHC instantaneous luminosity of is expected to be of the order of 8\%,
+The per bunch luminosity uncertainty with the BMTF tracks at the HL-LHC instantaneous luminosity is expected to be of the order of 8\%,
 which does not provide enough precision for an online luminometer and does not allow for an independent calibration
 with the vdM scans nor long term stability corrections from the emmittance scans.
 Below we describe an improved luminometer design based on muon trigger primitives which will be available 
@@ -62,10 +62,11 @@ Hits from the DT, RPC, and HO detectors will be combined to reconstruct muon tra
 The rates of these trigger primitives have been studied using Run 2 data.
 Figure~\ref{fig:DT_rates} shows the rates for the YB+2  chambers,
 the values have been extrapolated up to the expected HL-LHC instantaneous luminosity of  $7.5\times10^{34}\ \text{cm}^{-2}\text{s}^{-1}$ from the measured values in Run 2 data.
-We observe that the chambers in the first radial layer MB1 detect the highest rate and the rate decreases to less than 10\% in the outermost layer,
-this behaviour is consistent with particles from jet punch-through observed by the inner layers.
+We observe that the chambers in the first radial layer MB1 detect the highest rate
+and the rate decreases to less than 10\% at the outermost layer,
+this behaviour is consistent with a significant contribution of particles from jet punch-through observed by the inner layers.
 In the MB4 layer we also observe a phi asymmetry with higher rates on the top of the CMS detector (Sectors 3-5), believed to be due to machine induced backgrounds,
-for this reason we expect to exclude this layer from the final luminosity calculation as the rates are not expected to scale linearly with the number of IP collisions. 
+for this reason we expect to exclude this layer from the final luminosity calculation as the rates are not expected to always scale linearly with the number of IP collisions. 
 
 
 \begin{figure}[hbtp]
@@ -84,7 +85,7 @@ for this reason we expect to exclude this layer from the final luminosity calcul
 \begin{figure}[hbtp]
 \centering
 \includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-RatesExtrapolated.png}
-\caption{DT L1 trigger primitive rates for the chambers in the wheel YB+2.} 
+\caption{L1 trigger primitive rates expected for HL-LHC instantenous luminosity conditions for the DT chambers in the wheel YB+2.} 
 \label{fig:DT_rates}
 \end{figure}
 
@@ -130,12 +131,12 @@ A very linear behaviour is observed, the deviations from linearity obtained from
 Another important aspect is the statistical precision during normal Physics running as well as during the vdM scans used to obtain the calibration constant.
 To estimate the statistical precision we use the trigger primitive rates previously extrapolated to the HL-LHC luminosity conditions.
 Excluding the MB4 layer, the total orbit integrated rate expected is $\sim$17 MHz at $7.5\times10^{34}$ cm$^{-2}$ s$^{-1}$;
-this corresponds to about 0.61 trigger primitives per bunch crossing for Physics (pu=200) and 0.00153 per bunch crossing for vdM (pu=0.5) conditions.    
-For the online luminosity measurement using one colliding bunch and 1 s integration period for Physics (30 s for vdM),
+this corresponds to about 0.61 trigger primitives per bunch crossing for Physics and 0.00153 per bunch crossing for vdM conditions.    
+For the online luminosity measurement, using one colliding bunch and 1 s integration period for Physics (30 s for vdM),
 the statistical precision expected is 1.2\% (4.4\%).
 During Physics conditions the expected statistical precision meets the requirement of 2\%,
 while for vdM a precision of 0.36\%  meeting the requirements for the calibration constant (1\%) will be obtained only after combining all colliding bunches, 150 assummed here.
-The final precision of this luminometer will of course depend on the ability to handle any backgrounds and keep a stable operation of the muon detector and DAQ over entire run periods.
+The final precision of this luminometer will depend additionally on the ability to handle any backgrounds and keep a stable operation of the muon detector and DAQ over entire run periods.
 
 
 \clearpage
@@ -149,7 +150,7 @@ The final precision of this luminometer will of course depend on the ability to 
 
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-DAQ-Phase1_vs_Phase2.png}
+\includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-DAQ-Phase1_vs_Phase2.png}
 \caption{Current partition of the DT system readout electronics (left) and Phase-2 upgrade design (right) using On-Board Electronics for DT (OBDT).
   The muon trigger primitives are produced by the L1 processors.
 }   
@@ -159,7 +160,7 @@ The final precision of this luminometer will of course depend on the ability to 
 
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=.8\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
+\includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
 \caption{DT L1 trigger primitive rates for one chamber  as a function of instantenous luminosity measured by the HF luminometer in one Physics run during 2018.} 
 \label{fig:DT_linearity}
 \end{figure}
