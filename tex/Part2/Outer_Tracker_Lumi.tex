@@ -18,30 +18,6 @@ The OT barrel layer 6 consists of 78 ladders on each side of the detector, with 
 The track stub reconstruction (right side of Figure ~\ref{fig:OT_ladder_stub}) is performed with firmware algorithms in the front-end electronics and transmitted to the back-end for all LHC bunch crossings.
 
 
-\section{Data Acquisition}
-
-A design of the OT DAQ including both the front-end and back-end systems is shown in Figure~\ref{fig:OT_DAQ}.
-The back-end consists of Data, Trigger, and Control (DTC) boards which process the Trigger (TRIG) stream containting the track stub information. 
-The list of track stubs reconstructed for each bunch crossing is transmitted in blocks of 8 bunch crossings to the DTC boards.
-For the luminosity measurement, a specialized {\it BRIL Histogramming} firmware module has been developed which will count the number of track stubs in each bunch crossing and produce a histogram per orbit (3654 bunch crossings) at regular integration intervals of 1 second.
-
-Each luminosity histogram will be configured to integrate track stubs from one 12 module ladder, the DTC boards process 3-6 ladders.
-The number of necessary instances of  {\it BRIL Histogramming} modules will be installed in the DTC boards and readout via IPBus network protocol to the BRIL-DAQ system for further processing and storage.
-Considering the rate of track stubs per ladder estimated with CMS simulations at pile-up of 200  (Figure~\ref{fig:OT_rates}),  the necessary memory per luminosity histogram is estimated using 32-bit memory words as follows: 3564 stub counting words (bins/orbit) + 9 words header + 2 words module mask + 192 error words (12 modules * 8 errors * 2 words/error) for a total of 3767 words per histogram.
-In the case of 6 ladders per DTC this corresponds to a data readout rate of ~496 kbps.
-For the total of 156 OT histograms, the total data rate received by the BRIL-DAQ is approximately 18.8 Mbps.
-
-
-
-\section{Expected Performance}
-- Rates\\
-- linearity \\
-- statistical precision
-
-
-
-\clearpage
-
 \begin{figure}[hbtp]
 \centering
 \begin{subfigure}
@@ -73,6 +49,19 @@ For the total of 156 OT histograms, the total data rate received by the BRIL-DAQ
 \end{figure}
 
 
+\section{Data Acquisition}
+
+A design of the OT DAQ including both the front-end and back-end systems is shown in Figure~\ref{fig:OT_DAQ}.
+The back-end consists of Data, Trigger, and Control (DTC) boards which process the Trigger (TRIG) stream containting the track stub information. 
+The list of track stubs reconstructed for each bunch crossing is transmitted in blocks of 8 bunch crossings to the DTC boards.
+For the luminosity measurement, a specialized {\it BRIL Histogramming} firmware module has been developed which will count the number of track stubs in each bunch crossing and produce a histogram per orbit (3654 bunch crossings) at regular integration intervals of 1 second.
+
+Each luminosity histogram will be configured to integrate track stubs from one 12 module ladder, the DTC boards process 3-6 ladders.
+The number of necessary instances of  {\it BRIL Histogramming} modules will be installed in the DTC boards and readout via IPBus network protocol to the BRIL-DAQ system for further processing and storage.
+Considering the rate of track stubs per ladder estimated with CMS simulations at pile-up of 200  (Figure~\ref{fig:OT_rates}),  the necessary memory per luminosity histogram is estimated using 32-bit memory words as follows: 3564 stub counting words (bins/orbit) + 9 words header + 2 words module mask + 192 error words (12 modules * 8 errors * 2 words/error) for a total of 3767 words per histogram.
+In the case of 6 ladders per DTC this corresponds to a data readout rate of ~496 kbps.
+For the total of 156 OT histograms, the total data rate received by the BRIL-DAQ is approximately 18.8 Mbps.
+
 \begin{figure}[hbtp]
 \centering
 \includegraphics[width=.65\linewidth]{tex/Part2/fig/OT/OT-DAQoverview.png}
@@ -83,22 +72,8 @@ For the total of 156 OT histograms, the total data rate received by the BRIL-DAQ
 \end{figure}
 
 
-\begin{figure}[hbtp]
-\centering
-\includegraphics[width=.6\linewidth]{tex/Part2/fig/OT/OT-Rates.pdf}
-\caption{
-  Average number of track stubs per event per ladder as a function of the ladder id.
-  The rate is determined from the CMS Phase II simulation for a pile-up of 200.
-}
-\label{fig:OT_rates}
-\end{figure}
 
 
-\begin{figure}[hbtp]
-\centering
-\includegraphics[width=.6\linewidth]{tex/Part2/fig/OT/OT-linearity.png}
-\caption{
- Average number of track stubs per event as a function of pile-up determined from the CMS Phase II simulation showing a linear behaviour.
-} 
-\label{fig:OT_linearity}
-\end{figure}
+\input{tex/Part2/Outer_Tracker_Lumi_perf}
+
+
