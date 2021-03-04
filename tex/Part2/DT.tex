@@ -37,7 +37,7 @@
 
 During Run 2, counting of muon track candidates from the CMS Level 1 trigger system, the Barrel Muon Track Finder (BMTF),
 has proven to be useful for the luminosity systematics estimation due its excellent linearity and stability \cite{LUM-17-001}.
-The observable used was the barrel track soter rate integrating BMTF track candidates
+The observable used was the barrel track sorter rate integrating BMTF track candidates
  over the entire orbit and over one lumi section ($\sim$23 s) period.
 The statistical precision of this counter for the Run 2 instantaneous luminosity was of order 0.2\%.
 This counter was recorded by the BRIL-DAQ in real time,
@@ -103,7 +103,7 @@ and will allow for significant improvements in the trigger primitive reconstruct
 through improved timing resolution as well as improved spatial resolution. 
 
 
-For the online luminosity measurement, the generic BRIL Histogramming firmware described in Chapter~\ref{sec:TEPX} will be installed as part of the backend Layer 1 processor firmware.
+For the online luminosity measurement, the BRIL Histogramming firmware described in Chapter~\ref{sec:BRILDAQ} operating in synchronous mode will be installed as part of the backend Layer 1 processor firmware.
 This histogramming module will access and count the list of trigger primitives in parallel to the CMS L1 trigger stream
 and produce a histogram with counts per bunch crossing (3564 bins) at 1 second integration intervals.
 Based on the expected number of trigger primitive counts per bunch crossing, the required memory per histogram is estimated at 28 Kb, requiring a minimal amount of the L1 processor resources. 
@@ -161,7 +161,7 @@ The final precision of this luminometer will depend additionally on the ability 
 \begin{figure}[hbtp]
 \centering
 \includegraphics[width=.7\linewidth]{tex/Part2/fig/DT/DT-Linearity.png}
-\caption{DT L1 trigger primitive rates for one chamber  as a function of instantenous luminosity measured by the HF luminometer in one Physics run during 2018.} 
+\caption{L1 trigger primitive rates for one DT chamber (YBXX-SXX-MBXX) as a function of instantenous luminosity measured by the HF luminometer in one Physics run during 2018.} 
 \label{fig:DT_linearity}
 \end{figure}
 
