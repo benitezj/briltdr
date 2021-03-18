@@ -12,6 +12,7 @@ void linearityPlots_test()
   plotLuminometer("TDRplotscluster.root", "cluster_TEPX", "TEPX clusters",  // input file , TGraphErrors name, luminometer title
 		  0.5, 210, pileup,                                        // x-axis
 		  0, 60000, "mean number of clusters / bx");               // y-axis
+                                                                           // two additional arguments are there if need to change fit range
 }
 
 
