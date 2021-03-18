@@ -7,7 +7,7 @@
 TString pileup="pile-up";//x-axis title for simulation
 TLatex text;
 TLine line;
-TF1 Fit("Fit","[0]+[1]*x", 0, 205);
+TF1 * Fit = NULL;
 TCanvas* canv = NULL;
 TH1F* hist = NULL;
 float residual_range = 5;//%
@@ -80,11 +80,15 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
 
   
   TFile F(filename,"read");
+  if(F.IsZombie()){ cout<<"Bad input file: "<<filename<<endl; return;}
   TGraphErrors* G=(TGraphErrors*)F.Get(graphname);
   if(!G){ cout<<"Wrong graph name: "<<graphname<<endl; return;}
 
   //fit original graph otherwise fits stas appear on plot
-  G->Fit(&Fit,"Q","N",fitmin,fitmax);
+  Fit = new TF1(LuminometerName+"Fit","[0]+[1]*x", x_min, x_max);
+  Fit->SetLineWidth(2);
+  Fit->SetLineColor(2);
+  G->Fit(Fit,"Q","N",fitmin,fitmax);
 
   ///linear graph
   TGraphErrors Counts;
@@ -98,10 +102,9 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
     
   generateCanvas(LuminometerName,x_min, x_max, x_title, y_min, y_max, y_title);
   Counts.Draw("pesame");
-  Fit.Draw("lsame");
+  Fit->Draw("lsame");
   text.DrawLatexNDC(0.2,0.85,LuminometerName);
   printCanvas(outfile+"_Linearity");
-  
   
   //residuals
   TGraphErrors Residuals;
@@ -109,8 +112,8 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
     float x=Counts.GetX()[i];
     float y=Counts.GetY()[i];
     float ye=Counts.GetEY()[i];
-    Residuals.SetPoint(i,x,100*(y-Fit.Eval(x))/Fit.Eval(x));
-    Residuals.SetPointError(i,0,100*ye/Fit.Eval(x));
+    Residuals.SetPoint(i,x,100*(y-Fit->Eval(x))/Fit->Eval(x));
+    Residuals.SetPointError(i,0,100*ye/Fit->Eval(x));
   }
 
   generateCanvas(LuminometerName,x_min, x_max, x_title, -residual_range, residual_range, "linearity residuals (%) ");
@@ -121,7 +124,9 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
   line.DrawLine(0,-1,210,-1);
   text.DrawLatexNDC(0.2,0.85,LuminometerName);
   printCanvas(outfile+"_Linearity_residuals");
-  
+
+
+  delete Fit;
 }
 
 
