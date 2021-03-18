@@ -62,7 +62,7 @@ void printCanvas(TString canvName){
   canv->Update();
   canv->RedrawAxis();
   canv->GetFrame()->Draw();
-  canv->Print(canvName+".pdf",".pdf");
+  //canv->Print(canvName+".pdf",".pdf");
   canv->Print(canvName+".png",".png");
   delete canv;
   delete hist;
