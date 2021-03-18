@@ -3,7 +3,10 @@
 
 void 
 CMS_lumi( TPad* pad, int iPeriod, int iPosX )
-{            
+{
+
+  writeExtraText = ( extraText.CompareTo("") > 0 );
+  
   bool outOfFrame    = false;
   if( iPosX/10==0 ) 
     {
@@ -96,6 +99,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextAlign(11); 
       latex.SetTextSize(cmsTextSize*t);    
       latex.DrawLatex(l,1-t+lumiTextOffset*t,cmsText);
+      cout<<"cms"<<endl;
     }
   
   pad->cd();
@@ -151,13 +155,16 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
     {
       if( iPosX==0) 
 	{
-	  posX_ =   l +  relPosX*(1-l-r);
+	  //posX_ =   l +  relPosX*(1-l-r);
+	  posX_ =   l + extraTextOffset;
 	  posY_ =   1-t+lumiTextOffset*t;
+	  cout<<"YES"<<endl;
 	}
       latex.SetTextFont(extraTextFont);
       latex.SetTextSize(extraTextSize*t);
       latex.SetTextAlign(align_);
-      latex.DrawLatex(posX_, posY_, extraText);      
+      latex.DrawLatex(posX_, posY_, extraText);
+      cout<<"HELLO"<<endl;
     }
   return;
 }

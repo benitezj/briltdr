@@ -74,6 +74,9 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
 
   TString outfile=LuminometerName;
   outfile.ReplaceAll(" ","_");
+  outfile.ReplaceAll("+","p");
+  outfile.ReplaceAll("-","p");
+  outfile.ReplaceAll(",","_");
 
   
   TFile F(filename,"read");

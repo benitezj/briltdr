@@ -12,8 +12,9 @@ TString cmsText     = "CMS";
 float cmsTextFont   = 61;  // default is helvetic-bold
 
 bool writeExtraText = false;
-TString extraText   = "Preliminary";
+TString extraText   = "Phase-2 Simulation Preliminary";
 float extraTextFont = 52;  // default is helvetica-italics
+float extraTextOffset   = 0.1;//corresponds to the length of the cmsText
 
 // text sizes and text offsets with respect to the top frame
 // in unit of the top margin size
@@ -32,7 +33,7 @@ float extraOverCmsTextSize  = 0.76;
 TString lumi_13TeV = "20.1 fb^{-1}";
 TString lumi_8TeV  = "19.7 fb^{-1}";
 TString lumi_7TeV  = "5.1 fb^{-1}";
-TString lumi_sqrtS = "";
+TString lumi_sqrtS = "#sqrt{s} = 14 TeV";
 
 bool drawLogo      = false;
 
