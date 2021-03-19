@@ -7,9 +7,8 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
 void linearityPlots_OT()
 {
   setTDRStyle();
-  lumi_sqrtS = "#sqrt{s} = 14 TeV";
-  writeExtraText = true;
-  extraText  = "       Phase-2 Simulation Preliminary";  
+  //lumi_sqrtS = "#sqrt{s} = 14 TeV";
+  //extraText  = "Phase-2 Simulation Preliminary";  
 
   //OT Layer 6
   plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Layer 6 track stubs", 0.5, 210, pileup, 0, 1200, "mean number of stubs / bx");
@@ -31,6 +30,11 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
   TGraphErrors* Counts[6];
   TF1* F[6];
 
+
+  Fit = new TF1(LuminometerName+"Fit","[0]+[1]*x", x_min, x_max);
+  Fit->SetLineWidth(2);
+  Fit->SetLineColor(2);
+  
   int firstl=0;
 
   
@@ -38,7 +42,7 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
   leg.SetFillColor(0);
   leg.SetLineColor(0);
   leg.SetBorderSize(0);
- 
+  
 
   ///Extract the graphs and apply fit
   for(long l=firstl;l<6;l++){
@@ -55,7 +59,7 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
       Counts[l]->SetPointError(i,0,ye);
     }
 
-    F[l]=(TF1*)Fit.Clone(Fit.GetName()+graphname+(l+1));
+    F[l]=(TF1*)Fit->Clone(Fit->GetName()+graphname+(l+1));
     G->Fit(F[l],"Q","N",fitmin,fitmax);
   }
   
