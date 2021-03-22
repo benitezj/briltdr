@@ -12,7 +12,7 @@ TCanvas* canv = NULL;
 TH1F* hist = NULL;
 float residual_range = 5;//%
 
-void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title){
+void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title){
   int iPeriod=0;// uses the lumi_sqrtS string
   int iPos=0;//postion of CMS Preliminary
   
@@ -28,7 +28,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   float R = 0.04*W_ref;
 
 
-  canv = new TCanvas(LuminometerName+"_"+x_title+"_"+y_title,"",50,50,W,H);
+  canv = new TCanvas(CanvName+"_"+x_title+"_"+y_title,"",50,50,W,H);
   canv->SetFillColor(0);
   canv->SetBorderMode(0);
   canv->SetFrameFillStyle(0);
@@ -41,7 +41,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   canv->SetTicky(0);
   //canv->SetLogx(1);
   
-  hist = new TH1F(LuminometerName+x_title+"_"+y_title,"",1,x_min,x_max);
+  hist = new TH1F(CanvName+x_title+"_"+y_title,"",1,x_min,x_max);
   hist->GetXaxis()->SetNdivisions(6,5,0);
   hist->GetXaxis()->SetTitle(x_title);
   hist->GetXaxis()->SetRangeUser(x_min,x_max);
@@ -57,39 +57,66 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
 }
 
 
-void printCanvas(TString canvName){
+void generateCanvasResiduals(TString CanvName, float x_min, float x_max, TString x_title){
+  return generateCanvas(CanvName,x_min, x_max, x_title, -residual_range, residual_range, "deviation from linear (%) ");
+}
 
+void printCanvas(TString fileName, TString LuminometerName){
+  text.DrawLatexNDC(0.2,0.85,LuminometerName);
   canv->Update();
   canv->RedrawAxis();
   canv->GetFrame()->Draw();
-  //canv->Print(canvName+".pdf",".pdf");
-  canv->Print(canvName+".png",".png");
+  //canv->Print(fileName+".pdf",".pdf");
+  canv->Print(fileName+".png",".png");
   delete canv;
   delete hist;
+}
+
+void printCanvasResiduals(TString fileName, TString LuminometerName, float x_min, float x_max){
+  line.SetLineStyle(2);
+  line.SetLineWidth(2);
+  line.DrawLine(x_min,1,x_max,1);
+  line.DrawLine(x_min,-1,x_max,-1);
+  printCanvas(fileName,LuminometerName);
+}
+
+void fixOutputFileName(TString * outfile){
+  outfile->ReplaceAll(" ","_");
+  outfile->ReplaceAll("+","p");
+  outfile->ReplaceAll("-","m");
+  outfile->ReplaceAll(",","_");
+  outfile->ReplaceAll("#","_");
+  outfile->ReplaceAll("(","_");
+  outfile->ReplaceAll(")","_");
+  outfile->ReplaceAll("{","_");
+  outfile->ReplaceAll("}","_");
+}
+
+
+TF1* fitGraph(TGraphErrors * G, TString LuminometerName, float x_min, float x_max, float fitmin, float fitmax){
+  TF1 * F= new TF1(LuminometerName+"Fit","[0]+[1]*x", x_min, x_max);
+  F->SetLineWidth(2);
+  F->SetLineColor(2);
+  G->Fit(F,"Q","N",fitmin,fitmax);
+  return F;
 }
 
 
 
 void plotLuminometer(TString filename, TString graphname, TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title, float fitmin=0, float fitmax=2){
-
-  TString outfile=LuminometerName;
-  outfile.ReplaceAll(" ","_");
-  outfile.ReplaceAll("+","p");
-  outfile.ReplaceAll("-","p");
-  outfile.ReplaceAll(",","_");
-
   
-  TFile F(filename,"read");
-  if(F.IsZombie()){ cout<<"Bad input file: "<<filename<<endl; return;}
-  TGraphErrors* G=(TGraphErrors*)F.Get(graphname);
+  TString outfile=LuminometerName;
+  fixOutputFileName(&outfile);
+  
+  
+  TFile File(filename,"read");
+  if(File.IsZombie()){ cout<<"Bad input file: "<<filename<<endl; return;}
+  TGraphErrors* G=(TGraphErrors*)File.Get(graphname);
   if(!G){ cout<<"Wrong graph name: "<<graphname<<endl; return;}
-
+  
   //fit original graph otherwise fits stas appear on plot
-  Fit = new TF1(LuminometerName+"Fit","[0]+[1]*x", x_min, x_max);
-  Fit->SetLineWidth(2);
-  Fit->SetLineColor(2);
-  G->Fit(Fit,"Q","N",fitmin,fitmax);
-
+  Fit = fitGraph(G, LuminometerName, x_min, x_max, fitmin, fitmax);
+		  
   ///linear graph
   TGraphErrors Counts;
   for(int i=0;i<G->GetN();i++){
@@ -103,8 +130,7 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
   generateCanvas(LuminometerName,x_min, x_max, x_title, y_min, y_max, y_title);
   Counts.Draw("pesame");
   Fit->Draw("lsame");
-  text.DrawLatexNDC(0.2,0.85,LuminometerName);
-  printCanvas(outfile+"_Linearity");
+  printCanvas(outfile+"_Linearity",LuminometerName);
   
   //residuals
   TGraphErrors Residuals;
@@ -116,15 +142,9 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
     Residuals.SetPointError(i,0,100*ye/Fit->Eval(x));
   }
 
-  generateCanvas(LuminometerName,x_min, x_max, x_title, -residual_range, residual_range, "linearity residuals (%) ");
+  generateCanvasResiduals(LuminometerName, x_min, x_max, x_title);
   Residuals.Draw("pesame");
-  line.SetLineStyle(2);
-  line.SetLineWidth(2);
-  line.DrawLine(0,1,210,1);
-  line.DrawLine(0,-1,210,-1);
-  text.DrawLatexNDC(0.2,0.85,LuminometerName);
-  printCanvas(outfile+"_Linearity_residuals");
-
+  printCanvasResiduals(outfile+"_Linearity_residuals", LuminometerName, x_min, x_max);
 
   delete Fit;
 }
