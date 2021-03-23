@@ -36,7 +36,7 @@ void plot_OTrates(){
 
   ///CMS Style plot of the rates
   setTDRStyle();
-  TString plottitle("Outer Tracker Layer 6");
+  TString plottitle("Outer Tracker Layer 6, +z side");
   HRateVsLadder.SetMarkerStyle(8);
   HRateVsLadder.SetMarkerColor(1);
   generateCanvas(plottitle,0, 77, "TB2S ladder id", 0, 10, "mean number of stubs / bx");
