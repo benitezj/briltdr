@@ -10,9 +10,13 @@ void linearityPlots_HF()
 //  Log = false;
 
   //linear graphs
+  Log = false;
   plotLuminometer("HFoc.root", "MuVsPU", "HF Trigger Tower Occupancy", 0 , 210, pileup, 0. , 1.5, "mean number of towers / bx");
   plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ");
 
+  Log = true;
+  plotLuminometer("HFoc.root", "MuVsPU", "HF Trigger Tower Occupancy", 0.1 , 210, pileup, 0.01 , 1.5, "mean number of towers / bx");
+  plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0.1 , 3000, "mean E_{T} sum (GeV) / bx ");
 
 }
 
