@@ -11,6 +11,7 @@ TF1 * Fit = NULL;
 TCanvas* canv = NULL;
 TH1F* hist = NULL;
 float residual_range = 5;//%
+bool Log=false;
 
 void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title){
   int iPeriod=0;// uses the lumi_sqrtS string
@@ -39,7 +40,8 @@ void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title,
   canv->SetBottomMargin( B/H );
   canv->SetTickx(0);
   canv->SetTicky(0);
-  //canv->SetLogx(1);
+  canv->SetLogx(Log);
+  canv->SetLogy(Log);
   
   hist = new TH1F(CanvName+x_title+"_"+y_title,"",1,x_min,x_max);
   hist->GetXaxis()->SetNdivisions(6,5,0);
@@ -66,8 +68,8 @@ void printCanvas(TString fileName, TString LuminometerName){
   canv->Update();
   canv->RedrawAxis();
   canv->GetFrame()->Draw();
-  //canv->Print(fileName+".pdf",".pdf");
-  canv->Print(fileName+".png",".png");
+  if(Log)canv->Print(fileName+"_Log.png",".png");
+  else canv->Print(fileName+".png",".png");
   delete canv;
   delete hist;
 }
@@ -77,6 +79,7 @@ void printCanvasResiduals(TString fileName, TString LuminometerName, float x_min
   line.SetLineWidth(2);
   line.DrawLine(x_min,1,x_max,1);
   line.DrawLine(x_min,-1,x_max,-1);
+  canv->SetLogy(false);//only x-axis will come out log
   printCanvas(fileName,LuminometerName);
 }
 
