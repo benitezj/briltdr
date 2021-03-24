@@ -11,7 +11,7 @@ TF1 * Fit = NULL;
 TCanvas* canv = NULL;
 TH1F* hist = NULL;
 float residual_range = 5;//%
-bool Log=false;//logy vs logx
+bool Log=false;// this will set log scale for x-axis in residuals plot only
 
 void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title){
   int iPeriod=0;// uses the lumi_sqrtS string
@@ -40,8 +40,8 @@ void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title,
   canv->SetBottomMargin( B/H );
   canv->SetTickx(0);
   canv->SetTicky(0);
-  canv->SetLogx(Log);
-  canv->SetLogy(Log);
+  canv->SetLogx(false);
+  canv->SetLogy(false);
   
   hist = new TH1F(CanvName+x_title+"_"+y_title,"",1,x_min,x_max);
   hist->GetXaxis()->SetNdivisions(6,5,0);
@@ -61,7 +61,6 @@ void generateCanvas(TString CanvName, float x_min, float x_max, TString x_title,
 
 void generateCanvasResiduals(TString CanvName, float x_min, float x_max, TString x_title){
   generateCanvas(CanvName,x_min, x_max, x_title, -residual_range, residual_range, "deviation from linear (%) ");
-  canv->SetLogy(false);//only x-axis will come out log
   return ;
 }
 
@@ -81,6 +80,7 @@ void printCanvasResiduals(TString fileName, TString LuminometerName, float x_min
   line.SetLineWidth(2);
   line.DrawLine(x_min,1,x_max,1);
   line.DrawLine(x_min,-1,x_max,-1);
+  canv->SetLogx(Log);
   printCanvas(fileName,LuminometerName);
 }
 
@@ -143,7 +143,7 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
     float y=Counts.GetY()[i];
     float ye=Counts.GetEY()[i];
     Residuals.SetPoint(i,x,100*(y-Fit->Eval(x))/Fit->Eval(x));
-    Residuals.SetPointError(i,0,100*ye/Fit->Eval(x));
+    Residuals.SetPointError(i,0,100*ye/(Fit->Eval(x)));
   }
 
   generateCanvasResiduals(LuminometerName, x_min, x_max, x_title);
