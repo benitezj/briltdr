@@ -14,22 +14,22 @@ void linearityPlots_HF()
 
 // //linear graphs
 // Log = false;
-// plotLuminometer("HFoc.root", "MuVsPU", "HF Trigger Tower Occupancy", 0 , 210, pileup, 0. , 1.5, "mean number of towers / bx");
-// plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ");
+// plotLuminometer("HFoc.root", "MuVsPU", "HF Tower Occupancy", 0 , 210, pileup, 0. , 1.5, "mean number of towers / bx",0,200);
+// plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ",0,200);
 //
 // //log graphs
 // Log = true;
-// plotLuminometer("HFoc.root", "MuVsPU", "HF Trigger Tower Occupancy", 0.1 , 210, pileup, 0.01 , 1.5, "mean number of towers / bx");
-// plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0.1 , 210, pileup, 500 , 7000, "mean E_{T} sum (GeV) / bx ");
+// plotLuminometer("HFoc.root", "MuVsPU", "HF Tower Occupancy", 0.1 , 210, pileup, 0.01 , 1.5, "mean number of towers / bx",0,200);
+// plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0.1 , 210, pileup, 500 , 7000, "mean E_{T} sum (GeV) / bx ",0,200);
 
 
-  //plots without fit, just pull the graphs from the root file
-  Log = false;
-  simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Trigger Tower Occupancy", 0 , 210, pileup, 0. , 1.5, "mean number of towers / bx");
-  simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ");
-  Log = true;
-  simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Trigger Tower Occupancy", 0.1, 210, pileup, 0. , 1.5, "mean number of towers / bx");
-  simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ");
+   //plots without fit, just pull the graphs from the root file
+   Log = false;
+   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0 , 210, pileup, 0. , 2.0, "mean number of towers / bx");
+   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
+   Log = true;
+   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0.1, 210, pileup, 0. , 2.0, "mean number of towers / bx");
+   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
   
 
   
