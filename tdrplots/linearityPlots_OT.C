@@ -9,10 +9,10 @@ void linearityPlots_OT()
   setTDRStyle();
 
   //Layer 6
-  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Layer 6 track stubs", 0.5, 210, pileup, 0, 1200, "mean number of stubs / bx");
+  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Barrel Layer 6", 0.5, 210, pileup, 0, 1200, "mean number of stubs / bx");
 
   //All layers 
-  plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker track stubs per layer", 0.5, 210, pileup,  0, 2900 , "mean number of stubs / bx");
+  plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker Barrel", 0.5, 210, pileup,  0, 2900 , "mean number of stubs / bx");
 }
 
 
@@ -20,7 +20,7 @@ void linearityPlots_OT()
 //// aux function
 void plotLuminometer_OTLayers(TString filename, TString graphname, TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title, float fitmin=0, float fitmax=2){
 
-  TString outfile=LuminometerName;
+  TString outfile=LuminometerName+"_"+y_title;
   fixOutputFileName(&outfile);
  
   TFile Finput(filename,"read");
@@ -62,17 +62,20 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
     Counts[l]->Draw("pesame");
     F[l]->SetLineColor(6-l);
     F[l]->Draw("lsame");
-    leg.AddEntry(Counts[l],TString("Barrel layer ")+(l+1),"pl");
+    leg.AddEntry(Counts[l],TString("Layer ")+(l+1),"pl");
   }
   leg.Draw();
-  printCanvas(outfile+"_Linearity",LuminometerName);    
+  printCanvas(outfile+"_Linearity");    
 
 
 
   ///////////////////
   //residuals graph
   TGraphErrors Residuals[6];
-  generateCanvas(LuminometerName,x_min, x_max,x_title, -50, 50, "deviation from linear (%) ");
+  float temp=residual_range;
+  residual_range = 50;
+  generateCanvasResiduals(LuminometerName, x_min, x_max, x_title);
+  residual_range = temp;
   
   for(long l=firstl;l<6;l++){
     for(int i=0;i<Counts[l]->GetN();i++){
@@ -92,7 +95,7 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
   leg.SetX2NDC(0.4);
   leg.SetY2NDC(0.45);
   leg.Draw();
-  printCanvasResiduals(outfile+"_Linearity_residuals",LuminometerName, x_min, x_max);
- 
+  printCanvas(outfile+"_Linearity_residuals");
+
 
 }

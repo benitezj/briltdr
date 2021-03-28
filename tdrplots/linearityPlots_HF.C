@@ -17,23 +17,23 @@ void linearityPlots_HF()
 // plotLuminometer("HFoc.root", "MuVsPU", "HF Tower Occupancy", 0 , 210, pileup, 0. , 1.5, "mean number of towers / bx",0,200);
 // plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 3000, "mean E_{T} sum (GeV) / bx ",0,200);
 //
-// //log graphs
-// Log = true;
-// plotLuminometer("HFoc.root", "MuVsPU", "HF Tower Occupancy", 0.1 , 210, pileup, 0.01 , 1.5, "mean number of towers / bx",0,200);
-// plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0.1 , 210, pileup, 500 , 7000, "mean E_{T} sum (GeV) / bx ",0,200);
+
+  //log graphs
+ Log = true;
+ plotLuminometer("HFoc.root", "MuVsPU", "HF Tower Occupancy", 0.1 , 210, pileup, 0 , 2.0, "mean number of towers / bx",0,200);
+ plotLuminometer("HFet.root", "ETvsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0 , 5000, "mean E_{T} sum (GeV) / bx ",0,200);
 
 
    //plots without fit, just pull the graphs from the root file
-   Log = false;
-   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0 , 210, pileup, 0. , 2.0, "mean number of towers / bx");
-   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
-   Log = true;
-   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0.1, 210, pileup, 0. , 2.0, "mean number of towers / bx");
-   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
-  
-
+//   Log = false;
+//   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0 , 210, pileup, 0. , 2.0, "mean number of towers / bx");
+//   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
+//   Log = true;
+//   simple_plot("HFoc.root","MuVsPU", "RatioVsPU", "HF Tower Occupancy", 0.1, 210, pileup, 0. , 2.0, "mean number of towers / bx");
+//   simple_plot("HFet.root","ETvsPU", "RatioVsPU", "HF Transverse Energy", 0.1 , 210, pileup, 0. , 5000, "mean E_{T} sum (GeV) / bx ");
   
 }
+
 
 
 void simple_plot(TString filename, TString countsname, TString residualsname, TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title){
@@ -62,7 +62,7 @@ void simple_plot(TString filename, TString countsname, TString residualsname, TS
   generateCanvas(LuminometerName,x_min, x_max, x_title, y_min, y_max, y_title);
   Counts.Draw("pesame");
   Fit->Draw("lsame");
-  printCanvas(outfile+"_Linearity",LuminometerName);
+  printCanvas(outfile+"_Linearity");
   
   //residuals
   TGraphErrors* R=(TGraphErrors*)File.Get(residualsname);
@@ -78,7 +78,7 @@ void simple_plot(TString filename, TString countsname, TString residualsname, TS
 
   generateCanvasResiduals(LuminometerName, x_min, x_max, x_title);
   Residuals.Draw("pesame");
-  printCanvasResiduals(outfile+"_Linearity_residuals", LuminometerName, x_min, x_max);
+  printCanvas(outfile+"_Linearity_residuals");
 
 }
 

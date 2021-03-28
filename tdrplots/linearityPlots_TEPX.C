@@ -11,15 +11,17 @@ void linearityPlots_TEPX()
   //////////////////
   //clusters
   plotLuminometer("TDRplotscluster.root", "cluster_TEPX", "TEPX clusters", 0.5, 210, pileup, 0, 60000, "mean number of clusters / bx");
-  linearityPlots_perdisk("TDRplotscluster.root", "cluster_disk", "TEPX clusters per disk", 0.5, 210, pileup, 0, 9000, "mean number of clusters / bx");
-  linearityPlots_perringclusters("TDRplotscluster.root", "Clusters", "TEPX clusters per ring", 0.5, 210, pileup, 0, 2200, "mean number of clusters / bx");  
+  linearityPlots_perdisk("TDRplotscluster.root", "cluster_disk", "TEPX clusters per disk, +z side", 0.5, 210, pileup, 0, 9000, "mean number of clusters / bx");
+  linearityPlots_perringclusters("TDRplotscluster.root", "Clusters", "TEPX clusters per ring", 0.5, 210, pileup, 0, 2200, "mean number of clusters / bx");
+
+
 
   /////////////////////////
   //coincidences
   plotLuminometer("TDRplots_2xcoincidences.root", "2xCoincidences_TEPX", "TEPX coincidences", 0.5, 210, pileup, 0, 6000, "mean number of coincidences / bx");
-  linearityPlots_perdisk("TDRplots_2xcoincidences.root", "2xCoincidences_disk", "TEPX coincidences per disk", 0.5, 210, pileup, 0, 800, "mean number of coincidences / bx");
-  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinphiS2", "TEPX coincidences per ring,#phi overlaps", 0.5, 210, pileup, 0, 250, "mean number of coincidences / bx");
-  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinRS2", "TEPX coincidences per ring, r overlaps", 0.5, 210, pileup, 0, 70, "mean number of coincidences / bx");
+  linearityPlots_perdisk("TDRplots_2xcoincidences.root", "2xCoincidences_disk", "TEPX coincidences per disk, +z side", 0.5, 210, pileup, 0, 800, "mean number of coincidences / bx");
+  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinphiS2", "TEPX coincidences in#phi per ring", 0.5, 210, pileup, 0, 250, "mean number of coincidences / bx");
+  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinRS2", "TEPX coincidences in r per ring", 0.5, 210, pileup, 0, 70, "mean number of coincidences / bx");
   
 }
 
@@ -30,7 +32,7 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
 {
  
   
-  TString outfile=LuminometerName;
+  TString outfile=LuminometerName+"_"+y_title;
   fixOutputFileName(&outfile);
 
  
@@ -49,7 +51,7 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
   for(long l=0;l<4;l++){
     
     TGraphErrors* G=(TGraphErrors*)Finput.Get(graphname+(l+1));//+"combined");
-    if(!G){ cout<<"Wrong graph name: "<<graphname<<" "<<l+1<<endl; return;}
+    if(!G){ cout<<"Wrong graph name: "<<graphname+(l+1)<<endl; return;}
     
     ///copy for linear graph
     Counts[l] = new TGraphErrors();
@@ -74,16 +76,16 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
 
   generateCanvas(LuminometerName, x_min, x_max, x_title, y_min, y_max, y_title); 
 
-  for(long l=0;l<4;l++){
+  for(long l=0;l<4;l++){//+z side only
     Counts[l]->SetMarkerColor(4-l);
     Counts[l]->SetLineColor(4-l);
     Counts[l]->Draw("pesame");
     F[l]->SetLineColor(4-l);
     F[l]->Draw("lsame");
-    leg.AddEntry(Counts[l],TString("Disk ")+(l+1),"pl");
+    leg.AddEntry(Counts[l],TString("Disk +")+(l+1),"pl");
   }
   leg.Draw();
-  printCanvas(outfile+"_Linearity",LuminometerName);    
+  printCanvas(outfile+"_Linearity");    
   
   
   
@@ -103,12 +105,13 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
     Residuals[l].SetLineColor(4-l);
     Residuals[l].Draw("pesame");
   }   
-  leg.SetX1NDC(0.75);
+  leg.SetX1NDC(0.8);
   leg.SetY1NDC(0.72);
-  leg.SetX2NDC(0.95);
+  leg.SetX2NDC(0.99);
   leg.SetY2NDC(0.9);
   leg.Draw();
-  printCanvasResiduals(outfile+"_Linearity_residuals", LuminometerName, x_min, x_max);
+  //printCanvasResiduals(outfile+"_Linearity_residuals", LuminometerName, x_min, x_max);
+  printCanvas(outfile+"_Linearity_residuals");
     
 }
 
@@ -118,7 +121,7 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
 void linearityPlots_perringclusters(TString filename, TString graphname, TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title, float fitmin=0, float fitmax=2)
 {
   
-  TString outfile=LuminometerName;
+  TString outfile=LuminometerName+"_"+y_title;
   fixOutputFileName(&outfile);
 
   TFile Finput(filename,"read");
@@ -137,9 +140,9 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
   ///Extract the graphs and apply fit
   for(long l=0;l<4;l++){
     for(long m=0;m<5;m++){
-      
-      TGraphErrors* G=(TGraphErrors*)Finput.Get(graphname+"D"+(l+1)+"R"+(m+1));
-      if(!G){ cout<<"Wrong graph name: "<<graphname+"D"+(l+1)+"R"+(m+1)<<endl; return;}
+      TString objectname=graphname+"D"+(l+1)+"R"+(m+1);
+      TGraphErrors* G=(TGraphErrors*)Finput.Get(objectname);
+      if(!G){ cout<<"Wrong graph name: "<<objectname<<endl; return;}
       
       ///copy for linear graph
       Counts[l][m] = new TGraphErrors();
@@ -158,25 +161,23 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
 
   
   ////////////////////////
-  ////Linearity graph
+  ////Linearity graph (only +z side)
   for(long l=0;l<4;l++){
-    generateCanvas(LuminometerName+l,x_min, x_max, x_title, y_min, y_max, y_title);
+    generateCanvas(LuminometerName+", Disk +"+(l+1),x_min, x_max, x_title, y_min, y_max, y_title);
     TLegend leg(0.2,0.6,0.4,0.8);
     leg.SetFillColor(0);
     leg.SetLineColor(0);
     leg.SetBorderSize(0);	
-    for(long m=0;m<5;m++){
-      
+    for(long m=0;m<5;m++){      
       Counts[l][m]->SetMarkerColor(5-m);
       Counts[l][m]->SetLineColor(5-m);
       Counts[l][m]->Draw("pesame");
       F[l][m]->SetLineColor(5-m);
       F[l][m]->Draw("lsame");
-     
-      leg.AddEntry(Counts[l][m],TString("Disk ")+(l+1)+" Ring "+(m+1),"pl");
+      leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
     }
     leg.Draw(); 
-    printCanvas(outfile+"Disk"+(l+1)+"_Linearity",LuminometerName);
+    printCanvas(outfile+"Disk"+(l+1)+"_Linearity");
   }
   
   
@@ -184,7 +185,7 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
   ///////////////////
   //residuals graph
   for(long l=0;l<4;l++){
-    generateCanvasResiduals(LuminometerName+l,x_min, x_max, x_title);
+    generateCanvasResiduals(LuminometerName+", Disk +"+(l+1),x_min, x_max, x_title);
     TLegend leg(0.75,0.72,0.95,0.9);
     leg.SetFillColor(0);
     leg.SetLineColor(0);
@@ -203,14 +204,15 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
 	Residuals[l][m].SetPointError(i,0,100*ye/F[l][m]->Eval(x));
       }
 
-      leg.AddEntry(Counts[l][m],TString("Disk ")+(l+1)+" Ring "+(m+1),"pl");
+      leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
       Residuals[l][m].SetMarkerColor(5-m);
       Residuals[l][m].SetLineColor(5-m);
       Residuals[l][m].Draw("pesame");      
     }
     
     leg.Draw();
-    printCanvasResiduals(outfile+"Disk"+(l+1)+"_Linearity_residuals", LuminometerName, x_min, x_max);  
+    //printCanvasResiduals(outfile+"Disk"+(l+1)+"_Linearity_residuals", LuminometerName+", Disk +"+(l+1), x_min, x_max);
+    printCanvas(outfile+"Disk"+(l+1)+"_Linearity_residuals");
   }
   
 }
@@ -221,7 +223,7 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
 void linearityPlots_perringcoincidences(TString filename, TString graphname, TString LuminometerName, float x_min, float x_max, TString x_title, float y_min, float y_max, TString y_title, float fitmin=0, float fitmax=2)
 {
   
-  TString outfile=LuminometerName;
+  TString outfile=LuminometerName+"_"+y_title;
   fixOutputFileName(&outfile);
  
   
@@ -238,11 +240,12 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
   }
     
   //Extract the graphs and apply fit  
-  for(long l=0;l<4;l++){
+  for(long l=0;l<4;l++){//+z side only
     for(long m=0;m<5;m++){
-      TGraphErrors* G=(TGraphErrors*)Finput.Get(graphname+"D"+(l+1)+"R"+(m+1));
+      TString objectname=graphname+"D"+(l+1)+"R"+(m+1);
+      TGraphErrors* G=(TGraphErrors*)Finput.Get(objectname);
       if(!G){
-	cout<<"no graph: "<<graphname<<" "<<l<<" "<<m<<endl;
+	cout<<"no graph: "<<objectname<<endl;
 	continue;
       }
 
@@ -262,9 +265,9 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
 
   
   ////////////////////////
-  ////Linearity graph
+  ////Linearity graph (+z side only)
   for(long l=0;l<4;l++){   
-    generateCanvas(LuminometerName,x_min,x_max,x_title,y_min, y_max,y_title);
+    generateCanvas(LuminometerName+", Disk +"+(l+1),x_min,x_max,x_title,y_min, y_max,y_title);
     TLegend leg(0.2,0.6,0.4,0.8);
     leg.SetFillColor(0);
     leg.SetLineColor(0);
@@ -277,11 +280,11 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
       Counts[l][m]->Draw("pesame");
       F[l][m]->SetLineColor(5-m);
       F[l][m]->Draw("lsame");	
-      leg.AddEntry(Counts[l][m],TString("Disk ")+(l+1)+" Ring "+(m+1),"pl");
+      leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
     }
     
     leg.Draw();
-    printCanvas(outfile+"Disk"+(l+1)+"_Linearity", LuminometerName);
+    printCanvas(outfile+"Disk"+(l+1)+"_Linearity");
     
   }
 
@@ -289,7 +292,7 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
   ///////////////////
   //residuals graph
   for(long l=0;l<4;l++){
-    generateCanvasResiduals(LuminometerName+l,x_min,x_max,x_title);
+    generateCanvasResiduals(LuminometerName+", Disk +"+(l+1),x_min,x_max,x_title);
 
     TLegend leg(0.7,0.2,0.9,0.4);
     leg.SetFillColor(0);
@@ -306,14 +309,15 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
 	Residuals[l][m].SetPointError(i,0,100*ye/F[l][m]->Eval(x));	
       }
       
-      leg.AddEntry(Counts[l][m],TString("Disk ")+(l+1)+" Ring "+(m+1),"pl");
+      leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
       Residuals[l][m].SetMarkerColor(5-m);
       Residuals[l][m].SetLineColor(5-m);
       Residuals[l][m].Draw("pesame");
     }
     
     leg.Draw();
-    printCanvasResiduals(outfile+"Disk"+(l+1)+"_Linearity_residuals", LuminometerName, x_min, x_max);
+    //printCanvasResiduals(outfile+"Disk"+(l+1)+"_Linearity_residuals", LuminometerName, x_min, x_max);
+    printCanvas(outfile+"Disk"+(l+1)+"_Linearity_residuals");
   }
   
 }

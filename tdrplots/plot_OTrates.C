@@ -28,7 +28,7 @@ void plot_OTrates(){
     
     if(j<firstladder || j>lastladder) continue;
     HRateVsLadder.Fill(j,count_per_ladder);
-    cout<<"ladder"<<j-1<<"   "<<count_per_ladder<<endl;
+    //cout<<"ladder"<<j-1<<"   "<<count_per_ladder<<endl;
   }
 
   cout<<" total "<<count<<endl;
@@ -36,12 +36,12 @@ void plot_OTrates(){
 
   ///CMS Style plot of the rates
   setTDRStyle();
-  TString plottitle("Outer Tracker Layer 6, +z side");
+  TString plottitle("Outer Tracker Barrel Layer 6, +z side");
   HRateVsLadder.SetMarkerStyle(8);
   HRateVsLadder.SetMarkerColor(1);
-  generateCanvas(plottitle,0, 77, "TB2S ladder id", 0, 10, "mean number of stubs / bx");
+  generateCanvas(plottitle,0, 77, "TB2S ladder id", 0, 12, "mean number of stubs / bx");
   HRateVsLadder.Draw("histpsame");
-  printCanvas("OTRates_perladder",plottitle);
+  printCanvas("OTRates_perladder");
   
   
 }
