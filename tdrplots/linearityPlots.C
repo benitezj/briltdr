@@ -142,8 +142,10 @@ void plotLuminometer(TString filename, TString graphname, TString LuminometerNam
     float x=Counts.GetX()[i];
     float y=Counts.GetY()[i];
     float ye=Counts.GetEY()[i];
-    Residuals.SetPoint(i,x,100*(y-Fit->Eval(x))/Fit->Eval(x));
-    Residuals.SetPointError(i,0,100*ye/(Fit->Eval(x)));
+    //Residuals.SetPoint(i,x,100*(y-Fit->Eval(x))/Fit->Eval(x));
+    //Residuals.SetPointError(i,0,100*ye/(Fit->Eval(x)));
+    Residuals.SetPoint(i,x,100*(y-Fit->Eval(x))/(Fit->Eval(x) - Fit->Eval(0)));//correct for large noise level, imporant for HFET
+    Residuals.SetPointError(i,0,100*ye/(Fit->Eval(x) - Fit->Eval(0)));
   }
 
   generateCanvasResiduals(LuminometerName, x_min, x_max, x_title);
