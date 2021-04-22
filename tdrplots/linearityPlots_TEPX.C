@@ -10,19 +10,18 @@ void linearityPlots_TEPX()
 
   //////////////////
   //clusters
-  plotLuminometer("TDRplotscluster.root", "cluster_TEPX", "TEPX clusters", 0.5, 210, pileup, 0, 60000, "mean number of clusters / bx");
-  linearityPlots_perdisk("TDRplotscluster.root", "cluster_disk", "TEPX clusters per disk, +z side", 0.5, 210, pileup, 0, 9000, "mean number of clusters / bx");
-  linearityPlots_perringclusters("TDRplotscluster.root", "Clusters", "TEPX clusters per ring", 0.5, 210, pileup, 0, 2200, "mean number of clusters / bx");
+  plotLuminometer("TDRplotscluster.root", "cluster_TEPX", "TEPX clusters", 0.5, 210, pileup, 0, 60000, "Mean number of clusters / BX");
+  linearityPlots_perdisk("TDRplotscluster.root", "cluster_disk", "TEPX clusters, +z", 0.5, 210, pileup, 0, 9000, "Mean number of clusters / BX");
+  linearityPlots_perringclusters("TDRplotscluster.root", "Clusters", "TEPX clusters", 0.5, 210, pileup, 0, 2200, "Mean number of clusters / BX");
 
 
 
   /////////////////////////
   //coincidences
-  plotLuminometer("TDRplots_2xcoincidences.root", "2xCoincidences_TEPX", "TEPX coincidences", 0.5, 210, pileup, 0, 6000, "mean number of coincidences / bx");
-  linearityPlots_perdisk("TDRplots_2xcoincidences.root", "2xCoincidences_disk", "TEPX coincidences per disk, +z side", 0.5, 210, pileup, 0, 800, "mean number of coincidences / bx");
-  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinphiS2", "TEPX coincidences in#phi per ring", 0.5, 210, pileup, 0, 250, "mean number of coincidences / bx");
-  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinRS2", "TEPX coincidences in r per ring", 0.5, 210, pileup, 0, 70, "mean number of coincidences / bx");
-  
+  plotLuminometer("TDRplots_2xcoincidences.root", "2xCoincidences_TEPX", "TEPX coincidences", 0.5, 210, pileup, 0, 6000, "Mean number of coincidences / BX");
+  linearityPlots_perdisk("TDRplots_2xcoincidences.root", "2xCoincidences_disk", "TEPX coincidences, +z", 0.5, 210, pileup, 0, 800, "Mean number of coincidences / BX");
+  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinphiS2", "TEPX coincidences in#phi", 0.5, 210, pileup, 0, 250, "Mean number of coincidences / BX");
+  linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinRS2", "TEPX coincidences in r", 0.5, 210, pileup, 0, 70, "Mean number of coincidences / BX");
 }
 
 

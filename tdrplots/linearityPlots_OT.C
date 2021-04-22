@@ -9,10 +9,10 @@ void linearityPlots_OT()
   setTDRStyle();
 
   //Layer 6
-  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Barrel Layer 6", 0.5, 210, pileup, 0, 1200, "mean number of stubs / bx");
+  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Barrel Layer 6", 0.5, 210, pileup, 0, 1200, "Mean number of stubs / BX");
 
   //All layers 
-  plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker Barrel", 0.5, 210, pileup,  0, 2900 , "mean number of stubs / bx");
+  plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker Barrel", 0.5, 210, pileup,  0, 2900 , "Mean number of stubs / BX");
 }
 
 
