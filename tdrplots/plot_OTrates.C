@@ -36,10 +36,10 @@ void plot_OTrates(){
 
   ///CMS Style plot of the rates
   setTDRStyle();
-  TString plottitle("Outer Tracker Barrel Layer 6, +z side");
+  TString plottitle("Outer Tracker Barrel Layer 6");
   HRateVsLadder.SetMarkerStyle(8);
   HRateVsLadder.SetMarkerColor(1);
-  generateCanvas(plottitle,0, 77, "TB2S ladder id", 0, 12, "mean number of stubs / bx");
+  generateCanvas(plottitle,0, 77, "TB2S ladder ID (+z side)", 0, 12, "Mean number of stubs / BX");
   HRateVsLadder.Draw("histpsame");
   printCanvas("OTRates_perladder");
   
