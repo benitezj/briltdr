@@ -2,7 +2,7 @@
 #include <iostream>
 
 void 
-CMS_lumi( TPad* pad, int iPeriod, int iPosX )
+CMS_lumi( TPad* pad , TString plotTitle)
 {
 
   writeExtraText = ( extraText.CompareTo("") > 0 );
@@ -26,6 +26,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
   latex.SetTextAngle(0);
   latex.SetTextColor(kBlack);    
 
+  
   ///Lumi text on top right corner
   TString lumiText;
   lumiText += lumi_sqrtS;
@@ -35,26 +36,32 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
   latex.DrawLatex(1-r,1-t+lumiTextOffset*t,lumiText);
 
   
-  ///CMS ...
+  ///CMS 
   latex.SetTextFont(cmsTextFont);
   latex.SetTextAlign(11); 
   latex.SetTextSize(cmsTextSize*t);    
-  float posX_ = l  + 0.075 ;
-  //float posY_ = 1 - t + lumiTextOffset*t;
-  float posY_ = 1 - 2*t ;
+  float posX_ = l  + 0.04 ;
+  float posY_ = 1 - 1.7*t ;
   latex.DrawLatex(posX_,posY_,cmsText);
 
+  //plot Title
+  //latex.SetTextFont(cmsTextFont);
+  latex.SetTextFont(62);
+  latex.SetTextAlign(11);
+  latex.SetTextSize(extraOverCmsTextSize * cmsTextSize*t);      
+  latex.DrawLatex(posX_,posY_ - cmsTextSize*t,plotTitle);
 
+  
   /// Preliminary ...
-  if( writeExtraText )
-    {
+  if( writeExtraText ){
       pad->cd();
-      posX_ = l  + 0.075 + extraTextOffset;
       latex.SetTextFont(52);
       latex.SetTextSize(extraOverCmsTextSize * cmsTextSize * t);
       latex.SetTextAlign(align_);
-      latex.DrawLatex(posX_, posY_, extraText);
-    }
+      latex.DrawLatex(posX_+ extraTextOffset, posY_, extraText);
+  }
+
+
 
   
   return;

@@ -36,6 +36,7 @@ TString lumi_7TeV  = "5.1 fb^{-1}";
 TString lumi_sqrtS = "#sqrt{s} = 14 TeV";
 
 bool drawLogo      = false;
+int iPos=0;//postion of CMS Preliminary
 
-void CMS_lumi( TPad* pad, int iPeriod=3, int iPosX=10 );
+void CMS_lumi( TPad* pad , TString plotTitle);
 

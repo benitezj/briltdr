@@ -4,7 +4,7 @@
 #include "TH1F.h"
 
 
-TString pileup="Pileup";//x-axis title for simulation
+TString pileup="<PU>";//x-axis title for simulation
 TString residuals_xtitle="Deviation from linearity (%)";
 float residual_range = 5;//%
 bool Log=false;// this will set log scale for x-axis in residuals plot only
@@ -47,6 +47,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   hist->GetXaxis()->SetNdivisions(6,5,0);
   hist->GetXaxis()->SetTitle(x_title);
   hist->GetXaxis()->SetRangeUser(x_min,x_max);
+  hist->GetXaxis()->SetNoExponent(1);
   hist->GetYaxis()->SetNdivisions(6,5,0);
   hist->GetYaxis()->SetTitleOffset(1);
   hist->GetYaxis()->SetTitle(y_title);
@@ -55,11 +56,9 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   hist->Draw();
 
   //text.DrawLatexNDC(0.2,0.85,LuminometerName);
-  text.DrawLatexNDC(canv->GetLeftMargin() + 0.10, 1 - 0.8*canv->GetTopMargin(), LuminometerName);
+  //text.DrawLatexNDC(canv->GetLeftMargin() + 0.10, 1 - 0.8*canv->GetTopMargin(), LuminometerName);
 
-  int iPeriod=0;// uses the lumi_sqrtS string
-  int iPos=0;//postion of CMS Preliminary
-  CMS_lumi( canv, iPeriod, iPos );
+  CMS_lumi( canv, LuminometerName);
 }
 
 
