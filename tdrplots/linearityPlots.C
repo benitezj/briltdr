@@ -25,7 +25,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   // references for T, B, L, R
   float T = 0.08*H_ref;
   float B = 0.12*H_ref; 
-  float L = 0.12*W_ref;
+  float L = 0.13*W_ref;
   float R = 0.04*W_ref;
 
 
@@ -49,9 +49,9 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   hist->GetXaxis()->SetRangeUser(x_min,x_max);
   hist->GetXaxis()->SetNoExponent(1);
   hist->GetYaxis()->SetNdivisions(6,5,0);
-  hist->GetYaxis()->SetTitleOffset(1);
+  hist->GetYaxis()->SetTitleOffset(1.05);
   hist->GetYaxis()->SetTitle(y_title);
-  hist->GetYaxis()->SetMaxDigits(3);
+  //hist->GetYaxis()->SetMaxDigits(3);
   hist->GetYaxis()->SetRangeUser(y_min,y_max);
   hist->Draw();
 
