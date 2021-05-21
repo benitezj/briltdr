@@ -5,7 +5,7 @@
 
 
 TString pileup="<PU>";//x-axis title for simulation
-TString residuals_xtitle="Deviation from linearity (%)";
+TString residuals_xtitle="Deviation from linearity [%]";
 float residual_range = 5;//%
 bool Log=false;// this will set log scale for x-axis in residuals plot only
 TLatex text;
@@ -51,7 +51,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   hist->GetYaxis()->SetNdivisions(6,5,0);
   hist->GetYaxis()->SetTitleOffset(1.05);
   hist->GetYaxis()->SetTitle(y_title);
-  //hist->GetYaxis()->SetMaxDigits(3);
+  hist->GetYaxis()->SetMaxDigits(4);
   hist->GetYaxis()->SetRangeUser(y_min,y_max);
   hist->Draw();
 

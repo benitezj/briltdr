@@ -30,10 +30,8 @@ float relExtraDY = 1.2;
 // ratio of "CMS" and extra text size
 float extraOverCmsTextSize  = 0.76;
 
-TString lumi_13TeV = "20.1 fb^{-1}";
-TString lumi_8TeV  = "19.7 fb^{-1}";
-TString lumi_7TeV  = "5.1 fb^{-1}";
-TString lumi_sqrtS = "#sqrt{s} = 14 TeV";
+
+TString lumi_sqrtS = "pp collisions, 14 TeV";
 
 bool drawLogo      = false;
 int iPos=0;//postion of CMS Preliminary
