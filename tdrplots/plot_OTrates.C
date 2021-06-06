@@ -2,6 +2,8 @@
 
 void plot_OTrates(){
 
+  setTDRStyle();
+  
   TFile FileInput("OT_TDR-23march2021.root");
 
   TH2F * HOcc = (TH2F*)FileInput.Get("h2dOccupancyRodModBarrelL6");
@@ -14,8 +16,9 @@ void plot_OTrates(){
 
   float count=0.;
   
-  TH1F HRateVsLadder("HRateVsLadder","",76,0.5,76.5);
-     
+  //TH1F HRateVsLadder("HRateVsLadder","",76,0.5,76.5);
+  TGraph HRateVsLadder;
+  int pcount=0;
 
   for(Int_t j=1;j<=HOcc->GetNbinsY();j++){
     float count_per_ladder = 0.;
@@ -27,7 +30,8 @@ void plot_OTrates(){
     }
     
     if(j<firstladder || j>lastladder) continue;
-    HRateVsLadder.Fill(j,count_per_ladder);
+    //HRateVsLadder.Fill(j,count_per_ladder);
+    HRateVsLadder.SetPoint(pcount++,j,count_per_ladder);
     //cout<<"ladder"<<j-1<<"   "<<count_per_ladder<<endl;
   }
 
@@ -35,12 +39,11 @@ void plot_OTrates(){
 
 
   ///CMS Style plot of the rates
-  setTDRStyle();
-  TString plottitle("Outer Tracker Barrel Layer 6");
   HRateVsLadder.SetMarkerStyle(8);
   HRateVsLadder.SetMarkerColor(1);
-  generateCanvas(plottitle,0, 77, "TB2S ladder ID (+z side)", 0, 12, "Mean number of stubs / BX");
-  HRateVsLadder.Draw("histpsame");
+  generateCanvas("Outer Tracker Barrel Layer 6",0, 80, "TB2S ladder ID (+z side)", 0, 12, "Mean number of stubs / BX");
+  //HRateVsLadder.Draw("histpsame");
+  HRateVsLadder.Draw("psame");
   printCanvas("OTRates_perladder");
   
   

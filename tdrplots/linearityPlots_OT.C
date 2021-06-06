@@ -7,12 +7,13 @@ void plotLuminometer_OTLayers(TString filename, TString graphname, TString Lumin
 void linearityPlots_OT()
 {
   setTDRStyle();
-
+  Log = true;
+  
   //Layer 6
-  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Barrel Layer 6", 0.5, 210, pileup, 0, 1200, "Mean number of stubs / BX");
+  plotLuminometer("OT-newsamples-12march2021.root", "ghBarrelL6", "Outer Tracker Barrel Layer 6", pu_min, pu_max, pileup, 0, 1200, "Mean number of stubs / BX");
 
   //All layers 
-  plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker Barrel", 0.5, 210, pileup,  0, 2900 , "Mean number of stubs / BX");
+  //plotLuminometer_OTLayers("OT-newsamples-12march2021.root","ghBarrelL","Outer Tracker Barrel", pu_min, pu_max, pileup,  0, 2900 , "Mean number of stubs / BX");
 }
 
 

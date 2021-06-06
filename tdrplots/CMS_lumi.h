@@ -31,7 +31,7 @@ float relExtraDY = 1.2;
 float extraOverCmsTextSize  = 0.76;
 
 
-TString lumi_sqrtS = "pp collisions, 14 TeV";
+TString lumi_sqrtS = "14 TeV";
 
 bool drawLogo      = false;
 int iPos=0;//postion of CMS Preliminary

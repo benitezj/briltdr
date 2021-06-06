@@ -7,6 +7,8 @@
 TString pileup="<PU>";//x-axis title for simulation
 TString residuals_xtitle="Deviation from linearity [%]";
 float residual_range = 5;//%
+float pu_min=0.4;
+float pu_max=220;
 bool Log=false;// this will set log scale for x-axis in residuals plot only
 TLatex text;
 TLine line;
@@ -38,8 +40,8 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   canv->SetRightMargin( R/W );
   canv->SetTopMargin( T/H );
   canv->SetBottomMargin( B/H );
-  canv->SetTickx(0);
-  canv->SetTicky(0);
+  //canv->SetTickx(0);
+  //canv->SetTicky(0);
   canv->SetLogx(false);
   canv->SetLogy(false);
   
@@ -49,7 +51,7 @@ void generateCanvas(TString LuminometerName, float x_min, float x_max, TString x
   hist->GetXaxis()->SetRangeUser(x_min,x_max);
   hist->GetXaxis()->SetNoExponent(1);
   hist->GetYaxis()->SetNdivisions(6,5,0);
-  hist->GetYaxis()->SetTitleOffset(1.05);
+  hist->GetYaxis()->SetTitleOffset(1.15);
   hist->GetYaxis()->SetTitle(y_title);
   hist->GetYaxis()->SetMaxDigits(4);
   hist->GetYaxis()->SetRangeUser(y_min,y_max);
@@ -76,8 +78,7 @@ void printCanvas(TString fileName){
   canv->Update();
   canv->RedrawAxis();
   canv->GetFrame()->Draw();
-  if(Log)canv->Print(fileName+"_Log.png",".png");
-  else canv->Print(fileName+".png",".png");
+  canv->Print(fileName+".png",".png");
   delete canv;
   delete hist;
 }
@@ -90,6 +91,8 @@ void fixOutputFileName(TString * outfile){
   outfile->ReplaceAll("#","_");
   outfile->ReplaceAll("(","_");
   outfile->ReplaceAll(")","_");
+  outfile->ReplaceAll("[","_");
+  outfile->ReplaceAll("]","_");
   outfile->ReplaceAll("{","_");
   outfile->ReplaceAll("}","_");
   outfile->ReplaceAll("/","_");

@@ -41,7 +41,7 @@ CMS_lumi( TPad* pad , TString plotTitle)
   latex.SetTextAlign(11); 
   latex.SetTextSize(cmsTextSize*t);    
   float posX_ = l  + 0.04 ;
-  float posY_ = 1 - 1.7*t ;
+  float posY_ = 1 - 1.9*t ;
   latex.DrawLatex(posX_,posY_,cmsText);
 
   //plot Title
