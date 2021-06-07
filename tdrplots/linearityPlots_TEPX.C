@@ -13,23 +13,16 @@ void linearityPlots_TEPX()
   //////////////////
   //clusters
   plotLuminometer("TDRplotscluster.root", "cluster_TEPX", "TEPX clusters", pu_min, pu_max, pileup, 0, 60000, "Mean number of clusters / BX");
-  Log = false;
   linearityPlots_perdisk("TDRplotscluster.root", "cluster_disk", "TEPX clusters, +z", pu_min, pu_max, pileup, 0, 9000, "Mean number of clusters / BX");
   linearityPlots_perringclusters("TDRplotscluster.root", "Clusters", "TEPX clusters", pu_min, pu_max, pileup, 0, 2200, "Mean number of clusters / BX");
   
-  
   /////////////////////////
   //coincidences
-  Log = true;
   plotLuminometer("TDRplots_2xcoincidences.root", "2xCoincidences_TEPX", "TEPX coincidences", pu_min, pu_max, pileup, 0, 6000, "Mean number of coincidences / BX");
-  Log = false;
   linearityPlots_perdisk("TDRplots_2xcoincidences.root", "2xCoincidences_disk", "TEPX coincidences, +z", pu_min, pu_max, pileup, 0, 800, "Mean number of coincidences / BX");
   linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinphiS2", "TEPX coincidences in #phi", pu_min, pu_max, pileup, 0, 250, "Mean number of coincidences / BX");
   linearityPlots_perringcoincidences("TDRplots_2xcoincidences.root", "2xCoincidencesinRS2", "TEPX coincidences in r", pu_min, pu_max, pileup, 0, 70, "Mean number of coincidences / BX");
-  
-  
 }
-
 
 
     
@@ -103,11 +96,14 @@ void linearityPlots_perdisk(TString filename, TString graphname, TString Luminom
       float x=Counts[l]->GetX()[i];
       float y=Counts[l]->GetY()[i];
       float ye=Counts[l]->GetEY()[i];
-      Residuals[l].SetPoint(i,x-l,100*(y-F[l]->Eval(x))/F[l]->Eval(x));
+      //Residuals[l].SetPoint(i,x-l,100*(y-F[l]->Eval(x))/F[l]->Eval(x));
+      Residuals[l].SetPoint(i,(1.+(l-2)*0.03)*x,100*(y-F[l]->Eval(x))/F[l]->Eval(x));
       Residuals[l].SetPointError(i,0,100*ye/F[l]->Eval(x));
     }
     Residuals[l].SetMarkerColor(4-l);
+    Residuals[l].SetMarkerSize(0.5);
     Residuals[l].SetLineColor(4-l);
+    Residuals[l].SetLineWidth(2);
     Residuals[l].Draw("pesame");
   }   
   leg.SetX1NDC(0.76);
@@ -200,13 +196,15 @@ void linearityPlots_perringclusters(TString filename, TString graphname, TString
 	float x=Counts[l][m]->GetX()[i];
 	float y=Counts[l][m]->GetY()[i];
 	float ye=Counts[l][m]->GetEY()[i];
-	Residuals[l][m].SetPoint(i,x-m,100*(y-F[l][m]->Eval(x))/F[l][m]->Eval(x));
+	Residuals[l][m].SetPoint(i,(1.+(m-2)*0.03)*x,100*(y-F[l][m]->Eval(x))/F[l][m]->Eval(x));
 	Residuals[l][m].SetPointError(i,0,100*ye/F[l][m]->Eval(x));
       }
 
       leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
       Residuals[l][m].SetMarkerColor(5-m);
+      Residuals[l][m].SetMarkerSize(0.5);
       Residuals[l][m].SetLineColor(5-m);
+      Residuals[l][m].SetLineWidth(2);
       Residuals[l][m].Draw("pesame");      
     }
 
@@ -304,13 +302,15 @@ void linearityPlots_perringcoincidences(TString filename, TString graphname, TSt
 	float x=Counts[l][m]->GetX()[i];
 	float y=Counts[l][m]->GetY()[i];
 	float ye=Counts[l][m]->GetEY()[i];
-	Residuals[l][m].SetPoint(i,x-m,100*(y-F[l][m]->Eval(x))/F[l][m]->Eval(x));
+	Residuals[l][m].SetPoint(i,(1.+(m-2)*0.03)*x,100*(y-F[l][m]->Eval(x))/F[l][m]->Eval(x));
 	Residuals[l][m].SetPointError(i,0,100*ye/F[l][m]->Eval(x));	
       }
       
       leg.AddEntry(Counts[l][m],TString("Ring ")+(m+1),"pl");
       Residuals[l][m].SetMarkerColor(5-m);
+      Residuals[l][m].SetMarkerSize(0.5);
       Residuals[l][m].SetLineColor(5-m);
+      Residuals[l][m].SetLineWidth(2);
       Residuals[l][m].Draw("pesame");
     }
 
