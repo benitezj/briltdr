@@ -2,6 +2,8 @@
 
 void plot_OTrates(){
 
+  lumi_sqrtS = "<PU> = 200,  14 TeV";
+
   setTDRStyle();
   
   TFile FileInput("OT_TDR-23march2021.root");
