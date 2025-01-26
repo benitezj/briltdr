@@ -81,6 +81,7 @@ void printCanvas(TString fileName){
   canv->RedrawAxis();
   canv->GetFrame()->Draw();
   canv->Print(fileName+".png",".png");
+  //canv->Print(fileName+".root",".root");
   delete canv;
   delete hist;
 }

@@ -37,8 +37,15 @@ void plot_PCCAfterglow(){
   Raw->Draw("histpsame");
   Corr->Draw("histpsame");
   printCanvas("PCCAfterglow-v1p2");
-  
-  
+
+
+  TFile outputRootFile("PCCAfterglow-Run2Paper.root","recreate");
+  if(outputRootFile.IsZombie()) {cout<<"unable to open root file"<<endl; return;}
+  outputRootFile.cd();
+  Raw->Write();
+  Corr->Write();
+  outputRootFile.Close();  
+ 
   
 }
 
