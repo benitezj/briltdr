@@ -1,5 +1,9 @@
 #include "common.C"
 
+//TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/Histograms_stability_and_Lienarity_veto_allPeriods.root";
+TString inputfile="./briltdr/LumiDays2025/Histograms_stability_and_Lienarity_veto_allPeriods.root";
+
+
 TGraph* getGraph(TFile*F,TString name,int color=1, int rebin=0, TString namenorm=""){
   if(!F){cout<<"invalid File"<<endl; return 0;}
   
@@ -87,7 +91,7 @@ TGraph* getGraphFPIX(TFile*F,int side,int color=1, int rebin=0, bool norm=0){
 void pcc_layer_disk_stability(){
   setTDRStyle();
  
-  TFile F("/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/Histograms_stability_and_Lienarity_veto_allPeriods.root");
+  TFile F(inputfile);
   if(F.IsZombie()) return;
 
 

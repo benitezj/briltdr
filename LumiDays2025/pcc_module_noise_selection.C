@@ -1,8 +1,8 @@
 #include "common.C"
 
 
-TString inputfile="/Users/josebenitez/analysis/PerModuleStability_vetoB0_NoiseVsModule.root";
 ///afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_vetoB0_NoiseVsModule.root
+TString inputfile="./briltdr/LumiDays2025/PerModuleStability_vetoB0_NoiseVsModule.root";
 
 float QRangeLow=-5;
 float QRange=1;

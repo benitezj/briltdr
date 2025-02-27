@@ -12,7 +12,8 @@
 //float mod1Q=49E-4; float mod1W=77E-5;
 //float mod2Q=240E-4; float mod2W=109E-5;
 
-TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block1_selection1.root";
+//TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block1_selection1.root";
+TString inputfile="./briltdr/LumiDays2025/PerModuleStability_veto_Block1_selection1.root";
 //KEY: TH1F	h_modcount_vs_LS716_p;1	Module 306208788 Weight=35E-5 Stability=69E-4
 //KEY: TH1F     h_modcount_vs_LS103_p;1Module 304091168 Weight=82E-5 Stability=974E-4
 TString mod1name="h_modcount_vs_LS716_p";

@@ -41,17 +41,10 @@ CMS_lumi( TPad* pad , TString plotTitle)
   latex.SetTextAlign(11); 
   latex.SetTextSize(cmsTextSize*t);    
   float posX_ = l  + 0.04 ;
-  float posY_ = 1 - 1.9*t ;
+  //float posY_ = 1 - 1.9*t ; //inside 
+  float posY_ = 1-t+lumiTextOffset*t;//outside
   latex.DrawLatex(posX_,posY_,cmsText);
 
-  //plot Title
-  //latex.SetTextFont(cmsTextFont);
-  latex.SetTextFont(62);
-  latex.SetTextAlign(11);
-  latex.SetTextSize(extraOverCmsTextSize * cmsTextSize*t);      
-  latex.DrawLatex(posX_,posY_ - cmsTextSize*t,plotTitle);
-
-  
   /// Preliminary ...
   if( writeExtraText ){
       pad->cd();
@@ -61,8 +54,15 @@ CMS_lumi( TPad* pad , TString plotTitle)
       latex.DrawLatex(posX_+ extraTextOffset, posY_, extraText);
   }
 
+  
+  //plot Title, eg. Luminometer name, ...
+  //latex.SetTextFont(cmsTextFont);
+  latex.SetTextFont(62);
+  latex.SetTextAlign(11);
+  latex.SetTextSize(extraOverCmsTextSize * cmsTextSize*t);      
+  latex.DrawLatex(posX_,posY_ - cmsTextSize*t,plotTitle);
 
-
+  
   
   return;
 }

@@ -7,7 +7,8 @@ float WRangeLow=0.98;//4e-3;
 float WRange=1.03;//7e-3;
 float QRange=0.01;
 
-TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_all_Blocks_Lty.root";
+//TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_all_Blocks_Lty.root";
+TString inputfile="./briltdr/LumiDays2025/PerModuleStability_veto_all_Blocks_Lty.root";
 //KEY: TH1F        Filter;253      Module 344753156 Weight=593E-5 Linearity=5E-5 [backup cycle] ;
 //KEY: TH1F        Filter;13       Module 305188896 Weight=442E-5 Linearity=409E-5 [backup cycle]
 TString mod1name="Filter;253";
