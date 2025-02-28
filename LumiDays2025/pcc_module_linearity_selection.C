@@ -52,17 +52,6 @@ void pcc_module_linearity_selection(){
   TGraph* module2=getGraph(&F,mod2name,4,0,1);
   if(!module2){cout<<"No module2"<<endl; return;}
 
-  TLegend leg(0.45,0.78,0.92,0.90);
-  leg.SetFillColor(0);
-  leg.SetLineColor(0);
-  leg.SetFillStyle(0);
-  leg.SetBorderSize(0);
-  char txt[100];
-  sprintf(txt,"Module 1:  W=%.2fE-3,  Q=%.2fE-3",mod1W*1000,mod1Q*1000);
-  leg.AddEntry(module1,txt,"p");
-  sprintf(txt,"Module 2:  W=%.2fE-3,  Q=%.2fE-3",mod2W*1000,mod2Q*1000);
-  leg.AddEntry(module2,txt,"p");
-
   TF1* Fit=new TF1("Fit","[0]+[1]*x",PCCRangeLow,PCCRange);
   TGraph*module1C=(TGraph*)module1->Clone("module1C");
   module1C->Fit(Fit);
@@ -80,6 +69,23 @@ void pcc_module_linearity_selection(){
   delete module1C;
   delete module2C;
   
+
+  TLegend leg(0.45,0.75,0.92,0.90);
+  leg.SetFillColor(0);
+  leg.SetLineColor(0);
+  leg.SetFillStyle(0);
+  leg.SetBorderSize(0);
+  char txt[100];
+  sprintf(txt,"Module 1, W = %.2fE-3",mod1W*1000);
+  leg.AddEntry(module1,txt,"p");
+  sprintf(txt,"Module 1, Q_{L} = %.2fE-3",mod1Q*1000);
+  leg.AddEntry(&F1,txt,"l");
+  sprintf(txt,"Module 2, W = %.2fE-3",mod2W*1000);
+  leg.AddEntry(module2,txt,"p");
+  sprintf(txt,"Module 2, Q_{L} = %.2fE-3",mod2Q*1000);
+  leg.AddEntry(&F2,txt,"l");
+
+
   //Plot 1
   generateCanvas("",PCCRangeLow,PCCRange,"<#mu_{PCC}> per module ", WRangeLow, WRange, "Normalized Fraction of Total PCC");
   module1->Draw("psame");
@@ -102,7 +108,7 @@ void pcc_module_linearity_selection(){
   ///Plot 2
   TH1F*Q=(TH1F*)F.Get("LinearityDeviation_slope");
   LogY=1;
-  generateCanvas("",-QRange,QRange,"Module Linearity Quality (Q) ", 0.5, 50, "# of modules");
+  generateCanvas("",-QRange,QRange,"Module Linearity Quality (Q_{L}) ", 0.5, 50, "Number of modules");
   Q->Draw("histsame");
   line.SetLineColor(2);
   line.DrawLine(0.002,0.5,0.002,20);

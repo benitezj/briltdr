@@ -17,8 +17,9 @@ void pcc_module_noise_selection(){
   TGraph*Q=(TGraph*)F.Get(";1");
 
   //Plot 1
+  lumi_sqrtS ="Fill 9639 (2024, 13.6 TeV)";
   LogY=1;
-  generateCanvas("",0,1900,"module index", 1e-5,10, "#mu_{PCC} for Super Separation period");
+  generateCanvas("",0,1900,"Module index", 1e-5,10, "#mu_{PCC} for Super Separation periods");
   Q->Draw("psame");
   line.SetLineColor(2);
   line.DrawLine(0,1e-3,1900,1e-3);

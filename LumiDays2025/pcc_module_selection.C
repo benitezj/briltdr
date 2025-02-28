@@ -1,28 +1,16 @@
 #include "common.C"
 
-//TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block5_Sty1_Sty2.root";
-//KEY: TH1F	h_modcount_vs_LS708_p;1	Module 306204692 Weight=198E-5 Stability=28E-4
-//KEY: TH1F	h_modcount_vs_LS832_p;1	Module 306270212 Weight=162E-5 Stability=300E-4
-
-//TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block1_Sty1.root";
-//KEY: TH1F     h_modcount_vs_LS644_p;1 Module 305303572 Weight=77E-5 Stability=49E-4
-//KEY: TH1F	h_modcount_vs_LS271_p;1	Module 304177184 Weight=109E-5 Stability=240E-4
-//TString mod1name="h_modcount_vs_LS644_p";
-//TString mod2name="h_modcount_vs_LS271_p";
-//float mod1Q=49E-4; float mod1W=77E-5;
-//float mod2Q=240E-4; float mod2W=109E-5;
-
 //TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block1_selection1.root";
 TString inputfile="./briltdr/LumiDays2025/PerModuleStability_veto_Block1_selection1.root";
 //KEY: TH1F	h_modcount_vs_LS716_p;1	Module 306208788 Weight=35E-5 Stability=69E-4
 //KEY: TH1F     h_modcount_vs_LS103_p;1Module 304091168 Weight=82E-5 Stability=974E-4
 TString mod1name="h_modcount_vs_LS716_p";
 TString mod2name="h_modcount_vs_LS103_p";
-float mod1Q=69E-4; float mod1W=35E-5;
-float mod2Q=974E-4; float mod2W=82E-5;
+float mod1Q=69E-4; float mod1W=35E-5*100;
+float mod2Q=974E-4; float mod2W=82E-5*100;
 
 int LSRange=22000;
-float WRange=150e-5;
+float WRange=150e-5*100;
 float QRange=0.05;
 
 TGraph* getGraph(TFile*F,TString name,int color=1, int rebin=0, float scale=1){
@@ -66,14 +54,14 @@ void pcc_module_selection(){
   leg.SetFillStyle(0);
   leg.SetBorderSize(0);
   char txt[100];
-  sprintf(txt,"Module 1:  W=%.2fE-3,  Q=%.1fE-3",mod1W*1000,mod1Q*1000);
-  leg.AddEntry(module1,txt,"p");
-  sprintf(txt,"Module 2:  W=%.2fE-3,  Q=%.1fE-3",mod2W*1000,mod2Q*1000);
-  leg.AddEntry(module2,txt,"p");
+  sprintf(txt,"Module 1:  W=%.2fE-3,  Q_{S}=%.1fE-3",mod1W*1000,mod1Q*1000);
+  leg.AddEntry(module1,txt,"pl");
+  sprintf(txt,"Module 2:  W=%.2fE-3,  Q_{S}=%.1fE-3",mod2W*1000,mod2Q*1000);
+  leg.AddEntry(module2,txt,"pl");
 
   
   //Plot 1
-  generateCanvas("",0,LSRange,"Lumisection", 0.0, WRange, "Fraction of Total PCC");
+  generateCanvas("",0,LSRange,"Lumisection", 0.0, WRange, "Fraction of Total PCC [%]");
   module1->Draw("psame");
   module2->Draw("psame");
   leg.Draw();
@@ -89,7 +77,7 @@ void pcc_module_selection(){
   ///Plot 2
   TH1F*Q=(TH1F*)F.Get("StabilityDeviation");
   LogY=1;
-  generateCanvas("",0.,QRange,"Module Stability Quality (Q) ", 0.5, 200, "# of modules");
+  generateCanvas("",0.,QRange,"Module Stability Quality (Q_{S})", 0.5, 200, "Number of modules");
   Q->Draw("histsame");
   line.SetLineColor(2);
   line.DrawLine(0.015,0.5,0.015,50);
