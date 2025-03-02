@@ -3,7 +3,7 @@
 //TString inputfile="/afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_veto_Block1_selection1.root";
 TString inputfile="./briltdr/LumiDays2025/PerModuleStability_veto_Block1_selection1.root";
 //KEY: TH1F	h_modcount_vs_LS716_p;1	Module 306208788 Weight=35E-5 Stability=69E-4
-//KEY: TH1F     h_modcount_vs_LS103_p;1Module 304091168 Weight=82E-5 Stability=974E-4
+//KEY: TH1F     h_modcount_vs_LS103_p;1 Module 304091168 Weight=82E-5 Stability=974E-4
 TString mod1name="h_modcount_vs_LS716_p";
 TString mod2name="h_modcount_vs_LS103_p";
 float mod1Q=69E-4; float mod1W=35E-5*100;
@@ -48,15 +48,15 @@ void pcc_module_selection(){
   TGraph* module2=getGraph(&F,mod2name,4,0,mod2W);
   if(!module2){cout<<"No module2"<<endl; return;}
 
-  TLegend leg(0.45,0.78,0.92,0.90);
+  TLegend leg(0.4,0.78,0.90,0.90);
   leg.SetFillColor(0);
   leg.SetLineColor(0);
   leg.SetFillStyle(0);
   leg.SetBorderSize(0);
   char txt[100];
-  sprintf(txt,"Module 1:  W=%.2fE-3,  Q_{S}=%.1fE-3",mod1W*1000,mod1Q*1000);
+  sprintf(txt,"Module 1:  W = %.2fE-3,  Q_{S} = %.1fE-3",mod1W*1000,mod1Q*1000);
   leg.AddEntry(module1,txt,"pl");
-  sprintf(txt,"Module 2:  W=%.2fE-3,  Q_{S}=%.1fE-3",mod2W*1000,mod2Q*1000);
+  sprintf(txt,"Module 2:  W = %.2fE-3,  Q_{S} = %.1fE-3",mod2W*1000,mod2Q*1000);
   leg.AddEntry(module2,txt,"pl");
 
   
@@ -82,17 +82,18 @@ void pcc_module_selection(){
   line.SetLineColor(2);
   line.DrawLine(0.015,0.5,0.015,50);
   TLatex text;
+  text.SetTextColor(kBlack);    
+  text.SetTextFont(42);
   text.SetTextSize(0.03);
-  text.DrawTextNDC(0.7,0.85,TString("Entries: ")+Q->GetEntries());
+  text.DrawTextNDC(0.75,0.85,TString("Entries: ")+Q->GetEntries());
   sprintf(txt,"Mean: %.4f",Q->GetMean());
-  text.DrawTextNDC(0.7,0.82,txt);
+  text.DrawTextNDC(0.75,0.82,txt);
   sprintf(txt,"RMS: %.4f",Q->GetRMS());
-  text.DrawTextNDC(0.7,0.79,txt);
+  text.DrawTextNDC(0.75,0.79,txt);
   int overflow=0;
-  for(int b=1;b<=Q->GetNbinsX();b++)
-    if(Q->GetBinCenter(b)>QRange) overflow += Q->GetBinContent(b); 
+  for(int b=1;b<=Q->GetNbinsX()+1;b++) if(Q->GetBinCenter(b)>QRange) overflow += Q->GetBinContent(b); 
   sprintf(txt,"Overflow: %d",overflow);
-  text.DrawTextNDC(0.7,0.76,txt);
+  text.DrawTextNDC(0.75,0.76,txt);
   printCanvas("pcc_module_selection_distribution");
 }
 

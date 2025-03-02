@@ -70,21 +70,34 @@ void pcc_module_linearity_selection(){
   delete module2C;
   
 
-  TLegend leg(0.45,0.75,0.92,0.90);
+  char txt[100];
+    
+//  TLegend leg(0.45,0.75,0.92,0.90);
+//  leg.SetFillColor(0);
+//  leg.SetLineColor(0);
+//  leg.SetFillStyle(0);
+//  leg.SetBorderSize(0);
+// sprintf(txt,"Module 1, W = %.2fE-3",mod1W*1000);
+// leg.AddEntry(module1,txt,"p");
+// sprintf(txt,"Module 1, Q_{L} = %.2fE-3",mod1Q*1000);
+// leg.AddEntry(&F1,txt,"l");
+// sprintf(txt,"Module 2, W = %.2fE-3",mod2W*1000);
+// leg.AddEntry(module2,txt,"p");
+// sprintf(txt,"Module 2, Q_{L} = %.2fE-3",mod2Q*1000);
+// leg.AddEntry(&F2,txt,"l");
+
+  
+  TLegend leg(0.4,0.78,0.9,0.90);
   leg.SetFillColor(0);
   leg.SetLineColor(0);
   leg.SetFillStyle(0);
   leg.SetBorderSize(0);
-  char txt[100];
-  sprintf(txt,"Module 1, W = %.2fE-3",mod1W*1000);
-  leg.AddEntry(module1,txt,"p");
-  sprintf(txt,"Module 1, Q_{L} = %.2fE-3",mod1Q*1000);
-  leg.AddEntry(&F1,txt,"l");
-  sprintf(txt,"Module 2, W = %.2fE-3",mod2W*1000);
-  leg.AddEntry(module2,txt,"p");
-  sprintf(txt,"Module 2, Q_{L} = %.2fE-3",mod2Q*1000);
-  leg.AddEntry(&F2,txt,"l");
+  sprintf(txt,"Module 1:  W = %.1fE-3, Q_{L} = %.1fE-3",mod1W*1000,mod1Q*1000);
+  leg.AddEntry(module1,txt,"pl");
+  sprintf(txt,"Module 2:  W = %.1fE-3, Q_{L} = %.1fE-3",mod2W*1000,mod2Q*1000);
+  leg.AddEntry(module2,txt,"pl");
 
+  
 
   //Plot 1
   generateCanvas("",PCCRangeLow,PCCRange,"<#mu_{PCC}> per module ", WRangeLow, WRange, "Normalized Fraction of Total PCC");
@@ -116,23 +129,14 @@ void pcc_module_linearity_selection(){
 
   TLatex text;
   text.SetTextSize(0.03);
+  text.SetTextColor(kBlack);    
+  text.SetTextFont(42);
   text.DrawTextNDC(0.75,0.85,TString("Entries: ")+Q->GetEntries());
   sprintf(txt,"Mean: %.4f",Q->GetMean());
   text.DrawTextNDC(0.75,0.81,txt);
   sprintf(txt,"RMS: %.4f",Q->GetRMS());
   text.DrawTextNDC(0.75,0.77,txt);
 
-//  int overflow=0;
-//  for(int b=1;b<=Q->GetNbinsX();b++)
-//    if(Q->GetBinCenter(b)>QRange) overflow += Q->GetBinContent(b); 
-//  sprintf(txt,"Overflow: %d",overflow);
-//  text.DrawTextNDC(0.7,0.76,txt);
-
-//  int underflow=0;
-//  for(int b=1;b<=Q->GetNbinsX();b++)
-//    if(Q->GetBinCenter(b)<-QRange) underflow += Q->GetBinContent(b); 
-//  sprintf(txt,"Underflow: %d",underflow);
-//  text.DrawTextNDC(0.7,0.73,txt);
 
   printCanvas("pcc_module_linearity_selection_distribution");
 }

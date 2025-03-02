@@ -17,19 +17,49 @@ TGraph* getGraph(TFile*F,TString name,int color=1, int rebin=0, TString namenorm
     P->Scale(1./(float)H->GetMean(2));
   }
   
-  if(rebin>1) P->Rebin(rebin);
+  //if(rebin>1) P->Rebin(rebin);
 
   TGraph*G=new TGraph();
+
   for(int i=1;i<P->GetNbinsX();i++){
     if(P->GetBinContent(i)>0)
       G->SetPoint(G->GetN(),P->GetBinCenter(i),P->GetBinContent(i));
   }
+
   
-  G->SetMarkerColor(color);
-  G->SetMarkerStyle(8);
-  G->SetMarkerSize(0.6);
+  if(rebin%2!=0){cout<<" rebin parameter must be even"<<endl; return 0;}
+
+
+  TGraph*GR=new TGraph();
+  int i=1;
+  while(i<G->GetN()){
+    if(rebin==6){
+      GR->SetPoint(GR->GetN(),
+		  (G->GetPointX(i)+G->GetPointX(i+1)+G->GetPointX(i+2)+G->GetPointX(i+3)+G->GetPointX(i+4)+G->GetPointX(i+5))/6,
+		  (G->GetPointY(i)+G->GetPointY(i+1)+G->GetPointY(i+2)+G->GetPointY(i+3)+G->GetPointY(i+4)+G->GetPointY(i+5))/6);
+      i+=6;
+    }else if(rebin==4){
+      GR->SetPoint(GR->GetN(),
+		  (G->GetPointX(i)+G->GetPointX(i+1)+G->GetPointX(i+2)+G->GetPointX(i+3))/4,
+		  (G->GetPointY(i)+G->GetPointY(i+1)+G->GetPointY(i+2)+G->GetPointY(i+3))/4);
+      i+=4;
+    }else if(rebin==2){
+      GR->SetPoint(GR->GetN(),
+		  (G->GetPointX(i)+G->GetPointX(i+1))/2,
+		  (G->GetPointY(i)+G->GetPointY(i+1))/2);
+      i+=2;
+    }else{
+      GR->SetPoint(GR->GetN(),G->GetPointX(i),G->GetPointY(i));
+      i++;
+    }
+  }
   
-  return G;
+  
+  GR->SetMarkerColor(color);
+  GR->SetMarkerStyle(8);
+  GR->SetMarkerSize(0.6);
+  
+  return GR;
 }
 
 
@@ -45,9 +75,9 @@ TGraph* getGraphFPIX(TFile*F,int side,int color=1, int rebin=0, bool norm=0){
   TProfile*P3=(TProfile*)F->Get(TString("Histo_Disk3S")+side+"_pfx");
   if(!P3){cout<<"Disk 3 side "<<side<<" not found"<<endl; return 0;}
 
-  if(rebin>1)P->Rebin(rebin);
-  if(rebin>1)P2->Rebin(rebin);
-  if(rebin>1)P3->Rebin(rebin);
+//  if(rebin>1)P->Rebin(rebin);
+//  if(rebin>1)P2->Rebin(rebin);
+//  if(rebin>1)P3->Rebin(rebin);
 
   float ynorm=0.;
   if(norm){
@@ -78,12 +108,40 @@ TGraph* getGraphFPIX(TFile*F,int side,int color=1, int rebin=0, bool norm=0){
       G->SetPoint(G->GetN(),P->GetBinCenter(i),y);
     }
   }
+
+
+  if(rebin%2!=0){cout<<" rebin parameter must be even"<<endl; return 0;}
   
-  G->SetMarkerColor(color);
-  G->SetMarkerStyle(8);
-  G->SetMarkerSize(0.6);
+  TGraph*GR=new TGraph();
+  int i=1;
+  while(i<G->GetN()){
+    if(rebin==6){
+      GR->SetPoint(GR->GetN(),
+		   (G->GetPointX(i)+G->GetPointX(i+1)+G->GetPointX(i+2)+G->GetPointX(i+3)+G->GetPointX(i+4)+G->GetPointX(i+5))/6,
+		   (G->GetPointY(i)+G->GetPointY(i+1)+G->GetPointY(i+2)+G->GetPointY(i+3)+G->GetPointY(i+4)+G->GetPointY(i+5))/6);
+      i+=6;
+    }else if(rebin==4){
+      GR->SetPoint(GR->GetN(),
+		  (G->GetPointX(i)+G->GetPointX(i+1)+G->GetPointX(i+2)+G->GetPointX(i+3))/4,
+		  (G->GetPointY(i)+G->GetPointY(i+1)+G->GetPointY(i+2)+G->GetPointY(i+3))/4);
+      i+=4;
+    }else if(rebin==2){
+      GR->SetPoint(GR->GetN(),
+		  (G->GetPointX(i)+G->GetPointX(i+1))/2,
+		  (G->GetPointY(i)+G->GetPointY(i+1))/2);
+      i+=2;
+    }else{
+      GR->SetPoint(GR->GetN(),G->GetPointX(i),G->GetPointY(i));
+      i++;
+    }
+  }
   
-  return G;
+  
+  GR->SetMarkerColor(color);
+  GR->SetMarkerStyle(8);
+  GR->SetMarkerSize(0.6);
+  
+  return GR;
 }
 
 
@@ -94,18 +152,19 @@ void pcc_layer_disk_stability(){
   TFile F(inputfile);
   if(F.IsZombie()) return;
 
-
+  int rebin=6;
+  
   ///Plot 1
-  TGraph* Histo_Layer4_pfx=getGraph(&F,"Histo_Layer4_pfx",1,2);
+  TGraph* Histo_Layer4_pfx=getGraph(&F,"Histo_Layer4_pfx",1,rebin);
   if(!Histo_Layer4_pfx){cout<<"No Histo_Layer4_pfx"<<endl; return;}
 
-  TGraph* Histo_Layer3_pfx=getGraph(&F,"Histo_Layer3_pfx",2,2);
+  TGraph* Histo_Layer3_pfx=getGraph(&F,"Histo_Layer3_pfx",2,rebin);
   if(!Histo_Layer3_pfx){cout<<"No Histo_Layer3_pfx"<<endl; return;}
 
-  TGraph* Histo_S1_pfx=getGraphFPIX(&F,1,3,2);
+  TGraph* Histo_S1_pfx=getGraphFPIX(&F,1,3,rebin);
   if(!Histo_S1_pfx){cout<<"No FPIX Side 1"<<endl; return;}
 
-  TGraph* Histo_S2_pfx=getGraphFPIX(&F,2,4,2);
+  TGraph* Histo_S2_pfx=getGraphFPIX(&F,2,4,rebin);
   if(!Histo_S2_pfx){cout<<"No FPIX Side 2"<<endl; return;}
   
   
@@ -137,19 +196,19 @@ void pcc_layer_disk_stability(){
 
   //-----------------------------------------------------------------------------
   //Plot 2
-  TGraph* Layer4=getGraph(&F,"Histo_Layer4_pfx",1,0,"Histo_Layer4");
+  TGraph* Layer4=getGraph(&F,"Histo_Layer4_pfx",1,rebin,"Histo_Layer4");
   if(!Layer4){cout<<"No Layer4"<<endl; return;}
 
-  TGraph* Layer3=getGraph(&F,"Histo_Layer3_pfx",2,0,"Histo_Layer3");
+  TGraph* Layer3=getGraph(&F,"Histo_Layer3_pfx",2,rebin,"Histo_Layer3");
   if(!Layer3){cout<<"No Layer3"<<endl; return;}
 
-  TGraph* S1=getGraphFPIX(&F,1,3,0,1);
+  TGraph* S1=getGraphFPIX(&F,1,3,rebin,1);
   if(!S1){cout<<"No FPIX Side 1 norm"<<endl; return;}
 
-  TGraph* S2=getGraphFPIX(&F,2,4,0,1);
+  TGraph* S2=getGraphFPIX(&F,2,4,rebin,1);
   if(!S2){cout<<"No FPIX Side 2 norm"<<endl; return;}
 
-  generateCanvas("",0,300e3,"Lumisection", 0.95, 1.1, "Normalized Fraction of Total PCC");
+  generateCanvas("",0,300e3,"Lumisection", 0.97, 1.06, "Normalized Fraction of Total PCC");
   Layer4->SetStats(0);
   Layer4->Draw("psame");
   Layer3->Draw("psame");

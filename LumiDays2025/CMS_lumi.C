@@ -40,7 +40,7 @@ CMS_lumi( TPad* pad , TString plotTitle)
   latex.SetTextFont(cmsTextFont);
   latex.SetTextAlign(11); 
   latex.SetTextSize(cmsTextSize*t);    
-  float posX_ = l  + 0.04 ;
+  float posX_ = l;//  + 0.04 ;
   //float posY_ = 1 - 1.9*t ; //inside 
   float posY_ = 1-t+lumiTextOffset*t;//outside
   latex.DrawLatex(posX_,posY_,cmsText);
