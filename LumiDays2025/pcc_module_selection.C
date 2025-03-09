@@ -6,8 +6,8 @@ TString inputfile="./briltdr/LumiDays2025/PerModuleStability_veto_Block1_selecti
 //KEY: TH1F     h_modcount_vs_LS103_p;1 Module 304091168 Weight=82E-5 Stability=974E-4
 TString mod1name="h_modcount_vs_LS716_p";
 TString mod2name="h_modcount_vs_LS103_p";
-float mod1Q=69E-4; float mod1W=35E-5*100;
-float mod2Q=974E-4; float mod2W=82E-5*100;
+float mod1Q=69E-4; float mod1W=35E-5;
+float mod2Q=974E-4; float mod2W=82E-5;
 
 int LSRange=22000;
 float WRange=150e-5*100;
@@ -42,10 +42,10 @@ void pcc_module_selection(){
 
 
   ///Plot 1: 
-  TGraph* module1=getGraph(&F,mod1name,1,0,mod1W);
+  TGraph* module1=getGraph(&F,mod1name,1,0,mod1W*100);
   if(!module1){cout<<"No module1"<<endl; return;}
 
-  TGraph* module2=getGraph(&F,mod2name,4,0,mod2W);
+  TGraph* module2=getGraph(&F,mod2name,4,0,mod2W*100);
   if(!module2){cout<<"No module2"<<endl; return;}
 
   TLegend leg(0.4,0.78,0.90,0.90);
@@ -69,9 +69,9 @@ void pcc_module_selection(){
   line.SetLineStyle(2);
   line.SetLineWidth(2);
   line.SetLineColor(1);
-  line.DrawLine(0,mod1W,LSRange,mod1W);
+  line.DrawLine(0,mod1W*100,LSRange,mod1W*100);
   line.SetLineColor(4);
-  line.DrawLine(0,mod2W,LSRange,mod2W);
+  line.DrawLine(0,mod2W*100,LSRange,mod2W*100);
   printCanvas("pcc_module_selection_examplemodule");
 
   ///Plot 2

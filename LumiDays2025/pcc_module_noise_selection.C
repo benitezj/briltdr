@@ -2,7 +2,8 @@
 
 
 ///afs/cern.ch/user/l/lcuevasp/public/veto_2024_histograms/PerModuleStability_vetoB0_NoiseVsModule.root
-TString inputfile="./briltdr/LumiDays2025/PerModuleStability_vetoB0_NoiseVsModule.root";
+//TString inputfile="./briltdr/LumiDays2025/PerModuleStability_vetoB0_NoiseVsModule.root";
+TString inputfile="./briltdr/LumiDays2025/PerModuleStability_vetoB0_NoiseVsModule_V2.root";
 
 float QRangeLow=-5;
 float QRange=1;
